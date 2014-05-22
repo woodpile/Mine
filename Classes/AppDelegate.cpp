@@ -1,6 +1,8 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 
+#include "config/Config.h"
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -19,6 +21,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLView::create("Mine");
         director->setOpenGLView(glview);
     }
+
+    //load config
+    Config::init();
 
     // turn on display FPS
     director->setDisplayStats(true);

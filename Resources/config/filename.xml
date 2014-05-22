@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>img_menu_back</key>
+    	<string>HelloWorld.png</string>
+    	<key>img_menu_close_n</key>
+    	<string>CloseNormal.png</string>
+    	<key>img_menu_close_s</key>
+    	<string>CloseSelected.png</string>
+	</dict>
+	<dict>
+		<key>font_hei</key>
+		<string>simhei.ttf</string>
+	</dict>
+</array>
+</plist>
