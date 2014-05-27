@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "GameMenu.h"
 
 #include "config/Config.h"
 
@@ -22,6 +22,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
+    //设置屏幕设计尺寸
+    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    log("visibleSize: %f, %f.", visibleSize.width, visibleSize.height);
+    log("origin: %f, %f.", origin.x, origin.y);
+    auto ws = Director::getInstance()->getWinSize();
+    log("win: %f, %f.", ws.width, ws.height);
+    auto gs = Director::getInstance()->getOpenGLView()->getFrameSize();
+    log("gs: %f, %f.", gs.width, gs.height);
+
+
     //load config
     Config::init();
 
@@ -32,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = GameMenu::createScene();
 
     // run
     director->runWithScene(scene);

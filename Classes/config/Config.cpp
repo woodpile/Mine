@@ -33,7 +33,7 @@ bool Config::configFilePath()
     for (auto& value : txt_vec)
     {
         FileUtils::getInstance()->addSearchResolutionsOrder(value.asString());
-        log("add path to FileUtils : %s.", value.asString());
+        log("add path to FileUtils : %s.", value.asString().c_str());
     }
 
     return true;

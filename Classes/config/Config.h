@@ -16,7 +16,7 @@ public:
 
 	static std::string getFilename(std::string strIndex);
     //static std::string getString(std::string strIndex);
-    static int getFont(std::string strIndex);
+    //static int getFont(std::string strIndex);
     //static float getTimer(std::string strIndex);
     //static float getPos(std::string strIndex);
 
