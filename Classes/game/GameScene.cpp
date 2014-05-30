@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "config/Config.h"
 #include "MBox.h"
+#include "util/mmap.h"
 
 USING_NS_CC;
 
@@ -94,16 +95,17 @@ void GameScene::onTouchEnded(Touch* touch, Event* event)
 
 void GameScene::createBoxes(void)
 {
+    auto m = Mmap::getMmap(1);
+
     auto s = _backgroud->getContentSize();
     Director::getInstance()->getTextureCache()->addImage("white.png");
     auto pSpriteText = Director::getInstance()->getTextureCache()->addImage("blue.png");
 
     auto ms = pSpriteText->getContentSize();
-    int lx = (int)(s.width - ms.width) / (int)(ms.width);
-    int ly = (int)(s.height - ms.height) / (int)(ms.height);
+    int lx = (int)m.size();
+    int ly = (int)m[0].size();
     int ex = ((int)(s.width - lx * ms.width) / 2) + (int)(ms.width) / 2;
     int ey = ((int)(s.height - ly * ms.height) / 2) + (int)(ms.height) / 2;
-
 
     MBox* box = nullptr; 
     unsigned int tagBox = 1000;
@@ -114,6 +116,7 @@ void GameScene::createBoxes(void)
         {
             box = MBox::createWithTexture(pSpriteText);
             box->setPosition(ex + ms.width * i, ey + ms.height * j);
+            box->setAttr(m[i][j].num, (MBombType)(m[i][j].bombtype));
 
             tagBox += 1;
             _backgroud->addChild(box, 1, tagBox);
@@ -121,4 +124,6 @@ void GameScene::createBoxes(void)
         }
         _vecMatrix.push_back(vx);
     }
+
+    return;
 }

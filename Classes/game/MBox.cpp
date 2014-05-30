@@ -5,6 +5,11 @@
 
 USING_NS_CC;
 
+enum {
+    TAG_TAG_NUM = 100,
+    TAG_TAG_BOMB,
+};
+
 MBox::MBox(void)
 : _box_x(0), _box_y(0), _basePos(Point(0, 0)), _moveStartPos(Point(0, 0)),
 _bigger(false), _tag(nullptr), _cover(nullptr)
@@ -166,9 +171,10 @@ void MBox::showTag(bool show)
 {
     if (true == show && nullptr == _tag)
     {
-        _tag = Sprite::create("lock.png");
+        _tag = Sprite::create();
         _tag->setPosition(getContentSize().width / 2, getContentSize().height / 2);
-        this->addChild(_tag, 1, 100);
+        this->addChild(_tag, 1);
+        showAttrTag();
     }
     else if (false == show)
     {
@@ -222,6 +228,7 @@ void MBox::coverDel(void)
 {
     _cover->removeFromParent();
     _cover = nullptr;
+    doAttrRet();
 }
 
 void MBox::coverToBigger(void)
@@ -255,6 +262,50 @@ void MBox::matchTune(void)
     {
         memset(_tune, 0, 100);
         _cover->removeAllChildren();
+    }
+}
+
+
+//属性有关的操作
+void MBox::setMPos(int x, int y)
+{
+    _box_x = x;
+    _box_y = y;
+}
+
+void MBox::setAttr(int n, MBombType bt)
+{
+    _attribe.num = n;
+    _attribe.bombtype = bt;
+}
+
+void MBox::showAttrTag(void)
+{
+    if (nullptr == _tag)
+    {
+        return;
+    }
+
+    if (0 != _attribe.num)
+    {
+        auto sn = String::createWithFormat("%d", _attribe.num);
+        auto tn = Label::createWithTTF(sn->getCString() , CF_F("font_hei"), 27);
+        tn->setPosition(0, 0);
+        _tag->addChild(tn, 1, TAG_TAG_NUM);
+    }
+
+    return;
+}
+
+void MBox::doAttrRet(void)
+{
+    if (MBombType::NO != _attribe.bombtype)
+    {
+        _tag->removeChildByTag(TAG_TAG_NUM);
+        auto tb = Sprite::create("lock.png");
+        tb->setPosition(0, 0);
+        _tag->addChild(tb);
+        this->setColor(Color3B::RED);
     }
 }
 

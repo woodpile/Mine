@@ -3,6 +3,15 @@
 
 #include "cocos2d.h"
 
+enum MBombType {
+    NO,
+    NORMAL,
+}; 
+
+struct MBoxAttr {
+    int num;
+    MBombType bombtype;
+};
 
 class MBox : public cocos2d::Sprite
 {
@@ -12,6 +21,10 @@ public:
 
     static MBox* create(void);
     static MBox* createWithTexture(cocos2d::Texture2D *pTexture);
+
+    void setMPos(int x, int y);
+    void setAttr(int n, MBombType bt);
+
     virtual void onEnter(void);
     virtual void onExit(void);
 
@@ -33,8 +46,12 @@ private:
     void coverSlideBack(void);
     void matchTune(void);
 
+    void showAttrTag(void);
+    void doAttrRet(void);
+
     UINT _box_x;
     UINT _box_y;
+    MBoxAttr _attribe;
 
     cocos2d::Sprite* _tag;
 
