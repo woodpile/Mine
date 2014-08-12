@@ -1,7 +1,6 @@
 #include "MBox.h"
 #include "GameScene.h"
 #include "../config/Config.h"
-#include "../util/matrix.h"
 
 USING_NS_CC;
 

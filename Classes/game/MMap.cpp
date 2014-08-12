@@ -7,6 +7,7 @@
 //
 
 #include "stdlib.h"
+#include "time.h"
 #include "MMap.h"
 
 using std::vector;
@@ -29,7 +30,7 @@ MMap::~MMap(void)
 //随机重刷地图
 void MMap::randRefresh(void)
 {
-    srandom(time(nullptr));
+    srand(time(nullptr));
     
     int max = _width * _heigh;
     for (int i = 0; i < _mapdata.size(); i++)
@@ -38,7 +39,7 @@ void MMap::randRefresh(void)
     }
     for (int n = 0; n < _min_bomb_num;)
     {
-        auto sd = random();
+        auto sd = rand();
         int i = sd % max;
         
         if (0 != _mapdata[i].bomb)
@@ -126,7 +127,7 @@ MMapData MMap::getDate(int w, int h)
 //重新生成一个格子的内容
 void MMap::reduceOne(int index)
 {
-    auto sd = random();
+    auto sd = rand();
     if ((sd % 10000) < _bomb_prob)
     {
         _mapdata[index].bomb = 1;
@@ -149,7 +150,7 @@ void MMap::changeMap(int w, int h, int ex_num)
     int max = _width * _heigh;
     for (int t = 0; t < ex_num; t++)
     {
-        auto sd = random();
+        auto sd = rand();
         i = sd % max;
         this->reduceOne(i);
     }
@@ -178,7 +179,7 @@ void MMap::fillEnoughBomb(void)
     //补充炸弹数量到下限
     while (num < _min_bomb_num)
     {
-        auto sd = random();
+        auto sd = rand();
         int i = sd % len;
         
         if (0 != _mapdata[i].bomb)

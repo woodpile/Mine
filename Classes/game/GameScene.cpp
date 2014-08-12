@@ -2,7 +2,6 @@
 #include "GameScene.h"
 #include "../config/Config.h"
 #include "MBox.h"
-#include "../util/mmap.h"
 
 USING_NS_CC;
 
@@ -63,13 +62,6 @@ bool GameScene::init()
     pItemMenu->setPosition(0, visibleSize.height);
     this->addChild(pItemMenu);
     
-    //创建分数标签
-    _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 48);
-    _score_label->setColor(Color3B::BLACK);
-    _score_label->setPosition(_backgroud->getContentSize().width / 2,
-                        _backgroud->getContentSize().height - _score_label->getContentSize().height / 2);
-    _backgroud->addChild(_score_label);
-    
     //初始化有关资源
     Director::getInstance()->getTextureCache()->addImage("white.png");
     Director::getInstance()->getTextureCache()->addImage("blue.png");
@@ -92,11 +84,10 @@ void GameScene::menuCloseCallback(Ref* pSender)
 //重新开始菜单键的回调函数
 void GameScene::menuRestartCallback(Ref* pSender)
 {
-    //重置游戏参数
-    _flaged_box.clear();
-    this->resetScore();
     //删除现有的格子
     _backgroud->removeAllChildren();
+    //重置游戏参数
+    _flaged_box.clear();
     //创建新的游戏
     this->createNewGame();
 }
@@ -141,6 +132,14 @@ void GameScene::createNewGame(void)
             box->setGame(this);
         }
     }
+    
+    //创建分数标签
+    _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 48);
+    _score_label->setColor(Color3B::BLACK);
+    _score_label->setPosition(_backgroud->getContentSize().width / 2,
+                              _backgroud->getContentSize().height - _score_label->getContentSize().height / 2);
+    _backgroud->addChild(_score_label);
+    
     return;
 }
 
@@ -170,11 +169,11 @@ void GameScene::procClickBoxBang(int w, int h)
     log("box big bang !!!");
     
     //处理所有的格子
-    auto boxvec = _backgroud->getChildren();
-    for (auto it = boxvec.begin(); it != boxvec.end(); it++)
+    for (auto i = GameScene::BASE_BOX_ID; i < (GameScene::BASE_BOX_ID + _map->_width * _map->_heigh); i++)
     {
         //对所有的格子做掀开的处理
-        ((MBox*)(*it))->openAndDoAtrrib();
+        auto it = (MBox*)_backgroud->getChildByTag(i);
+        it->openAndDoAtrrib();
     }
 }
 //处理一个安全的格子被点击
@@ -306,13 +305,6 @@ void GameScene::addScore(int n)
     //增加分数
     _score += n;
     //重写分数标签
-    _score_label->setString(StringUtils::format("SCORE %d", _score));
-}
-//重置分数
-void GameScene::resetScore(void)
-{
-    //重写分数
-    _score = 0;
-    //重写分数标签
-    _score_label->setString(StringUtils::format("SCORE 0"));
+    auto s = String::createWithFormat("SCORE %d", _score);
+    _score_label->setString(s->getCString());
 }
