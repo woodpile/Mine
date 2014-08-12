@@ -69,6 +69,7 @@ bool GameScene::init()
     //初始化游戏参数
     _flaged_box.clear();
     _score = 0;
+    _map = nullptr;
     
     //初始化游戏格子
     this->createNewGame();
@@ -172,8 +173,8 @@ void GameScene::procClickBoxBang(int w, int h)
     for (auto i = GameScene::BASE_BOX_ID; i < (GameScene::BASE_BOX_ID + _map->_width * _map->_heigh); i++)
     {
         //对所有的格子做掀开的处理
-        auto it = (MBox*)_backgroud->getChildByTag(i);
-        it->openAndDoAtrrib();
+        auto box = (MBox*)_backgroud->getChildByTag(i);
+        box->openAndDoAtrrib();
     }
 }
 //处理一个安全的格子被点击
