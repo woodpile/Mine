@@ -20,10 +20,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLView::create("Mine");
         director->setOpenGLView(glview);
+        glview->setFrameSize(320, 480);
     }
 
     //设置屏幕设计尺寸
-    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
+    glview->setDesignResolutionSize(640, 1136, ResolutionPolicy::NO_BORDER);
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
     log("visibleSize: %f, %f.", visibleSize.width, visibleSize.height);

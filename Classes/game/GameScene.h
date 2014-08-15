@@ -47,6 +47,8 @@ private:
     
     //增加分数
     void addScore(int n);
+    //重置分数
+    void resetScore(void);
     
     //成员数据 已标记的格子
     std::vector<std::pair<int, int>> _flaged_box;

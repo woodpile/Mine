@@ -316,7 +316,7 @@ void MBox::doAttrRet(void)
     if (0 != _attribe.num)
     {
         auto sn = String::createWithFormat("%d", _attribe.num);
-        auto tn = Label::createWithTTF(sn->getCString() , CF_F("font_hei"), 27);
+        auto tn = Label::createWithTTF(sn->getCString() , CF_F("font_hei"), 80);
         tn->setPosition(0, 0);
         _tag->addChild(tn, 1, TAG_TAG_NUM);
     }

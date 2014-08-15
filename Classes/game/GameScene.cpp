@@ -39,19 +39,25 @@ bool GameScene::init()
     
     //取屏幕逻辑尺寸
     Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    visibleSize.height += origin.y;
+    visibleSize.width += origin.x;
     
     //创建背景
-    _backgroud = Sprite::create("back1.png", Rect(0, 0, 800, 600));
+    _backgroud = Sprite::create("back1.png");
     _backgroud->setPosition(visibleSize.width / 2, visibleSize.height / 2);
     addChild(_backgroud);
+    log("backgroud sprite size %f, %f", _backgroud->getContentSize().width, _backgroud->getContentSize().height);
     
     //创建退出菜单键
-    auto labelExit = Label::createWithTTF("return to menu", CF_F("font_hei"), 24);
+    auto labelExit = Label::createWithTTF("return to menu", CF_F("font_hei"), 48);
+    labelExit->setColor(Color3B::BLACK);
     MenuItemLabel* pExitItem = MenuItemLabel::create(labelExit, CC_CALLBACK_1(GameScene::menuCloseCallback, this));
     auto exitSize = pExitItem->getContentSize();
     pExitItem->setPosition(exitSize.width / 2, 0 - exitSize.height / 2);
     //创建重新开始菜单键
-    auto labelRestart = Label::createWithTTF("restart game", CF_F("font_hei"), 24);
+    auto labelRestart = Label::createWithTTF("restart game", CF_F("font_hei"), 48);
+    labelRestart->setColor(Color3B::BLACK);
     MenuItemLabel* pRestartItem = MenuItemLabel::create(labelRestart, CC_CALLBACK_1(GameScene::menuRestartCallback, this));
     auto restartSize = pRestartItem->getContentSize();
     pRestartItem->setPosition(exitSize.width / 2, 0 - exitSize.height - restartSize.height / 2);
@@ -61,6 +67,13 @@ bool GameScene::init()
     pItemMenu->addChild(pRestartItem);
     pItemMenu->setPosition(0, visibleSize.height);
     this->addChild(pItemMenu);
+    
+    //创建分数标签
+    _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 72);
+    _score_label->setColor(Color3B::BLACK);
+    _score_label->setPosition(visibleSize.width * 3 / 5,
+                              visibleSize.height - _score_label->getContentSize().height / 2);
+    this->addChild(_score_label);
     
     //初始化有关资源
     Director::getInstance()->getTextureCache()->addImage("white.png");
@@ -89,6 +102,8 @@ void GameScene::menuRestartCallback(Ref* pSender)
     _backgroud->removeAllChildren();
     //重置游戏参数
     _flaged_box.clear();
+    //重置分数
+    this->resetScore();
     //创建新的游戏
     this->createNewGame();
 }
@@ -96,7 +111,7 @@ void GameScene::menuRestartCallback(Ref* pSender)
 //创建一个新的游戏
 void GameScene::createNewGame(void)
 {
-    int width = 6, heigh = 6;
+    int width = 5, heigh = 5;
     
     //初始化游戏地图
     if (nullptr != _map)
@@ -112,7 +127,8 @@ void GameScene::createNewGame(void)
     auto mapsize = _backgroud->getContentSize();
     auto boxsize = Director::getInstance()->getTextureCache()->getTextureForKey("blue.png")->getContentSize();
     int edgew = ((int)(mapsize.width - width * boxsize.width) / 2) + (int)(boxsize.width) / 2;
-    int edgeh = ((int)(mapsize.height - heigh * boxsize.height) /2) - (int)(boxsize.height) / 2 + heigh * boxsize.height;
+    int edgeh = ((int)(mapsize.height - heigh * boxsize.height) /2) -
+                (int)(boxsize.height) / 2 + heigh * boxsize.height;
     
     //根据地图画出格子
     for (int h = 0; h < heigh; h++)
@@ -133,13 +149,6 @@ void GameScene::createNewGame(void)
             box->setGame(this);
         }
     }
-    
-    //创建分数标签
-    _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 48);
-    _score_label->setColor(Color3B::BLACK);
-    _score_label->setPosition(_backgroud->getContentSize().width / 2,
-                              _backgroud->getContentSize().height - _score_label->getContentSize().height / 2);
-    _backgroud->addChild(_score_label);
     
     return;
 }
@@ -181,6 +190,9 @@ void GameScene::procClickBoxBang(int w, int h)
 void GameScene::procClickBoxSafe(int w, int h)
 {
     log("box safe");
+    
+    //增加分数
+    this->addScore(10);
     
     //处理num为0的格子
     if (0 == _map->getDate(w, h).num)
@@ -307,5 +319,15 @@ void GameScene::addScore(int n)
     _score += n;
     //重写分数标签
     auto s = String::createWithFormat("SCORE %d", _score);
+    _score_label->setString(s->getCString());
+}
+
+//重置分数
+void GameScene::resetScore(void)
+{
+    //增加分数
+    _score = 0;
+    //重写分数标签
+    auto s = String::createWithFormat("SCORE 0");
     _score_label->setString(s->getCString());
 }
