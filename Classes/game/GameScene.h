@@ -24,6 +24,8 @@ public:
     void boxBeClick(int boxid);
     //格子被标记
     void boxBeFlag(int w, int h);
+    //重新扩散一些盒子
+    void reDiffusion(void);
 
     //引擎
     CREATE_FUNC(GameScene);
@@ -41,7 +43,7 @@ private:
     //处理一个安全的格子被点击
     void procClickBoxSafe(int w, int h);
     //扩散一个格子
-    void procDiffusionBox(int w, int h);
+    void procDiffusionBox(int w, int h, bool force = false);
     //改变一些格子
     void changeSomeBoxes(void);
     
@@ -52,13 +54,17 @@ private:
     
     //成员数据 已标记的格子
     std::vector<std::pair<int, int>> _flaged_box;
-    //成员对象 背景精灵
-    cocos2d::Sprite* _backgroud;
-    //成员对象 分数标签 分数
-    cocos2d::Label* _score_label;
-    int _score;
+    //成员数据 已重新扩散标记
+    bool _flag_reDifusion;
     //成员对象 地图信息
     MMap* _map;
+    //成员对象 分数
+    int _score;
+    
+    //成员对象 背景精灵
+    cocos2d::Sprite* _backgroud;
+    //成员对象 分数标签
+    cocos2d::Label* _score_label;
 };
 
 #endif // __M_GAMESCENE_H__

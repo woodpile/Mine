@@ -152,7 +152,7 @@ void MBox::onTouchEnded(Touch* touch, Event* event)
     }
     //位移极小的时候，判断为点击
     //否则按照滑动处理
-    if (3 > touch->getLocation().getDistance(_moveStartPos))
+    if (12 > touch->getLocation().getDistance(_moveStartPos))
     {
         coverClick();
     }
@@ -305,10 +305,10 @@ void MBox::doAttrRet(void)
     //处理炸弹属性
     if (MBombType::NOBOMB != _attribe.bombtype)
     {
-        auto tb = Sprite::create("lock.png");
+        auto tb = Sprite::create("Bomb.png");
         tb->setPosition(0, 0);
         _tag->addChild(tb);
-        this->setColor(Color3B::RED);
+        //this->setColor(Color3B::RED);
         
         return;
     }
@@ -376,7 +376,8 @@ void MBox::closeAndRecover(void)
     auto as = ScaleTo::create(0.1f, 1, 0);
     auto asb = ScaleTo::create(0.1f, 1, 1);
     auto af = CallFuncN::create(CC_CALLBACK_1(MBox::closeInMiddleCallback, this));
-    this->runAction(Sequence::create(as, af, asb, NULL));
+    auto af2 = CallFuncN::create(CC_CALLBACK_1(MBox::closeFinishCallback, this));
+    this->runAction(Sequence::create(as, af, asb, af2, NULL));
 }
 //重新合上格子的中间阶段的回调函数
 void MBox::closeInMiddleCallback(cocos2d::Node* sender)
@@ -388,5 +389,10 @@ void MBox::closeInMiddleCallback(cocos2d::Node* sender)
     _cover = Sprite::createWithTexture(pSpriteText);
     _cover->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     this->addChild(_cover, 2);
+}
+//重新合上格子的完成以后的回调函数
+void MBox::closeFinishCallback(cocos2d::Node* sender)
+{
+    _game->reDiffusion();
 }
 

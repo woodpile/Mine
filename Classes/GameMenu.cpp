@@ -38,24 +38,18 @@ bool GameMenu::init()
     menu->setPosition(0, 0);
     this->addChild(menu, 1);
 
-    //创建标题
-    auto label = Label::createWithTTF("Hello World", CF_F("font_hei"), 24);
-    label->setPosition(origin.x + visibleSize.width/2,
-                        origin.y + visibleSize.height - label->getContentSize().height);
-    this->addChild(label, 1);
-
     //创建背景
     auto sprite = Sprite::create(CF_F("img_menu_back"));
     sprite->setPosition(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y);
     this->addChild(sprite, 0);
 
     //创建进入游戏场景的菜单键
-    auto labelLan = Label::createWithTTF("Game Start", CF_F("font_hei"), 24);
-    MenuItemLabel* pMenuItemLanTest = MenuItemLabel::create(labelLan, CC_CALLBACK_1(GameMenu::menuGame, this));
-    pMenuItemLanTest->setPosition(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y);
+    auto enterGameItem = MenuItemImage::create("Start_Game.png", "Start_Game_select.png",
+                                           CC_CALLBACK_1(GameMenu::menuGame, this));
+    enterGameItem->setPosition(visibleSize.width/2 + origin.x, visibleSize.height * 2 / 5 + origin.y);
     //创建主菜单
     Menu* pItemMenu = Menu::create();
-    pItemMenu->addChild(pMenuItemLanTest);
+    pItemMenu->addChild(enterGameItem);
     pItemMenu->setPosition(0, 0);
     this->addChild(pItemMenu, 2);
 

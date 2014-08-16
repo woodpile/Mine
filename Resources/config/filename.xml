@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>img_menu_back</key>
-    	<string>HelloWorld96.png</string>
+    	<string>Menu_back.png</string>
     	<key>img_menu_close_n</key>
     	<string>CloseNormal.png</string>
     	<key>img_menu_close_s</key>

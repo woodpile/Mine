@@ -14,7 +14,7 @@ using std::vector;
 using std::pair;
 
 MMap::MMap(int width, int heigh)
-: _width(width), _heigh(heigh), _bomb_prob(5000), _bomb_prob_inc(false), _min_bomb_num(3)
+: _width(width), _heigh(heigh), _bomb_prob(5000), _bomb_prob_inc(false), _min_bomb_num(4)
 {
     vector<MMapData> tmp(_width * _heigh);
     _mapdata = tmp;
@@ -30,7 +30,7 @@ MMap::~MMap(void)
 //随机重刷地图
 void MMap::randRefresh(void)
 {
-    srand(time(nullptr));
+    srand((unsigned int)time(nullptr));
     
     int max = _width * _heigh;
     for (int i = 0; i < _mapdata.size(); i++)

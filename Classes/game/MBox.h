@@ -65,6 +65,8 @@ private:
     
     //重新合上格子的中间阶段的回调函数
     void closeInMiddleCallback(cocos2d::Node* sender);
+    //重新合上格子的完成以后的回调函数
+    void closeFinishCallback(cocos2d::Node* sender);
     
     //处理标记显示或隐藏
     void showTag(bool show);

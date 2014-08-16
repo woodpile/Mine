@@ -40,40 +40,43 @@ bool GameScene::init()
     //取屏幕逻辑尺寸
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    visibleSize.height += origin.y;
-    visibleSize.width += origin.x;
+    //visibleSize.height += origin.y;
+    //visibleSize.width += origin.x;
     
     //创建背景
     _backgroud = Sprite::create("back1.png");
-    _backgroud->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+    _backgroud->setPosition(visibleSize.width / 2, visibleSize.height / 2 + origin.y);
     addChild(_backgroud);
     log("backgroud sprite size %f, %f", _backgroud->getContentSize().width, _backgroud->getContentSize().height);
     
     //创建退出菜单键
-    auto labelExit = Label::createWithTTF("return to menu", CF_F("font_hei"), 48);
-    labelExit->setColor(Color3B::BLACK);
-    MenuItemLabel* pExitItem = MenuItemLabel::create(labelExit, CC_CALLBACK_1(GameScene::menuCloseCallback, this));
+    auto pExitItem = MenuItemImage::create("Return.png", "Return_big.png",
+                                           CC_CALLBACK_1(GameScene::menuCloseCallback, this));
     auto exitSize = pExitItem->getContentSize();
-    pExitItem->setPosition(exitSize.width / 2, 0 - exitSize.height / 2);
+    pExitItem->setPosition(0 - exitSize.width / 2, exitSize.height / 2);
     //创建重新开始菜单键
-    auto labelRestart = Label::createWithTTF("restart game", CF_F("font_hei"), 48);
-    labelRestart->setColor(Color3B::BLACK);
-    MenuItemLabel* pRestartItem = MenuItemLabel::create(labelRestart, CC_CALLBACK_1(GameScene::menuRestartCallback, this));
+    auto pRestartItem = MenuItemImage::create("Restart.png", "Restart_big.png",
+                                           CC_CALLBACK_1(GameScene::menuRestartCallback, this));
     auto restartSize = pRestartItem->getContentSize();
-    pRestartItem->setPosition(exitSize.width / 2, 0 - exitSize.height - restartSize.height / 2);
+    pRestartItem->setPosition(0 - exitSize.width - restartSize.width / 2, restartSize.height / 2);
     //创建菜单
     Menu* pItemMenu = Menu::create();
     pItemMenu->addChild(pExitItem);
     pItemMenu->addChild(pRestartItem);
-    pItemMenu->setPosition(0, visibleSize.height);
+    pItemMenu->setPosition(visibleSize.width + origin.x, origin.y);
     this->addChild(pItemMenu);
+    
+    //创建分数底板
+    auto score_board = Sprite::create("Scoreboard.png");
+    score_board->setPosition(visibleSize.width / 2,
+                             visibleSize.height + origin.y - score_board->getContentSize().height / 2);
+    this->addChild(score_board);
     
     //创建分数标签
     _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 72);
     _score_label->setColor(Color3B::BLACK);
-    _score_label->setPosition(visibleSize.width * 3 / 5,
-                              visibleSize.height - _score_label->getContentSize().height / 2);
-    this->addChild(_score_label);
+    _score_label->setPosition(score_board->getContentSize().width / 2, score_board->getContentSize().height / 2);
+    score_board->addChild(_score_label);
     
     //初始化有关资源
     Director::getInstance()->getTextureCache()->addImage("white.png");
@@ -83,6 +86,7 @@ bool GameScene::init()
     _flaged_box.clear();
     _score = 0;
     _map = nullptr;
+    _flag_reDifusion = false;
     
     //初始化游戏格子
     this->createNewGame();
@@ -125,10 +129,12 @@ void GameScene::createNewGame(void)
     
     //计算地图边界
     auto mapsize = _backgroud->getContentSize();
+    
     auto boxsize = Director::getInstance()->getTextureCache()->getTextureForKey("blue.png")->getContentSize();
     int edgew = ((int)(mapsize.width - width * boxsize.width) / 2) + (int)(boxsize.width) / 2;
     int edgeh = ((int)(mapsize.height - heigh * boxsize.height) /2) -
                 (int)(boxsize.height) / 2 + heigh * boxsize.height;
+    log("edge w %d, h %d", edgew, edgeh);
     
     //根据地图画出格子
     for (int h = 0; h < heigh; h++)
@@ -201,7 +207,7 @@ void GameScene::procClickBoxSafe(int w, int h)
     }
 }
 //扩散一个格子
-void GameScene::procDiffusionBox(int w, int h)
+void GameScene::procDiffusionBox(int w, int h, bool force)
 {
     //异常检查
     if (0 != _map->getDate(w, h).bomb)
@@ -211,7 +217,7 @@ void GameScene::procDiffusionBox(int w, int h)
     
     //打开本格子
     auto box = (MBox*)_backgroud->getChildByTag(GameScene::BASE_BOX_ID + h * _map->_width + w);
-    if (true == box->isOpened())
+    if (true == box->isOpened() && false == force)
     {
         return;
     }
@@ -310,6 +316,28 @@ void GameScene::changeSomeBoxes(void)
             }
         }
     }
+    _flag_reDifusion = false;
+}
+//重新扩散一些格子
+void GameScene::reDiffusion(void)
+{
+    if (true == _flag_reDifusion) {
+        return;
+    }
+    //处理所有格子
+    for (int th = 0; th < _map->_heigh; th++)
+    {
+        for (int tw = 0; tw < _map->_width; tw++)
+        {
+            auto box = (MBox*)_backgroud->getChildByTag(GameScene::BASE_BOX_ID + th * _map->_width + tw);
+            //如果格子本身是打开的，而且数字为0，则扩散
+            if (true == box->isOpened() && 0 == _map->getDate(tw, th).num)
+            {
+                this->procDiffusionBox(tw, th, true);
+            }
+        }
+    }
+    _flag_reDifusion = true;
 }
 
 //增加分数

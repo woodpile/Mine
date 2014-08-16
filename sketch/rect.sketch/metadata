@@ -9,9 +9,12 @@
 	<key>commit</key>
 	<string>b2079fe10151ad0eef6cc553b7369ec78d67b9b5</string>
 	<key>fonts</key>
-	<array/>
+	<array>
+		<string>STKaiti-SC-Regular</string>
+		<string>ComicSansMS-Bold</string>
+	</array>
 	<key>length</key>
-	<integer>31266</integer>
+	<integer>174783</integer>
 	<key>version</key>
 	<integer>37</integer>
 </dict>
