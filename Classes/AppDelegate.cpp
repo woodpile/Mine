@@ -2,6 +2,7 @@
 #include "GameMenu.h"
 
 #include "config/Config.h"
+#include "util/UtilNet.h"
 
 USING_NS_CC;
 
@@ -20,7 +21,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLView::create("Mine");
         director->setOpenGLView(glview);
-        glview->setFrameSize(320, 480);
+//        glview->setFrameSize(320, 480);
     }
 
     //设置屏幕设计尺寸
@@ -37,12 +38,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     //load config
     Config::init();
+    UtilNet::regRecvList();
 
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 25);
 
     // create a scene. it's an autorelease object
     auto scene = GameMenu::createScene();

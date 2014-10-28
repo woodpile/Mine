@@ -1,0 +1,1351 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"c",
+				"ContentLength	int64 ν"
+			],
+			[
+				"s",
+				"Sprintf	string ƒ"
+			],
+			[
+				"re",
+				"response	NetResponse ν"
+			],
+			[
+				"r",
+				"requrst	NetRequest ν"
+			],
+			[
+				"func",
+				"func (*NetResponse)	func (...) {...} ʂ"
+			],
+			[
+				"P",
+				"ParseForm	error ƒ"
+			],
+			[
+				"C",
+				"ContentLength	int64 ν"
+			],
+			[
+				"resp",
+				"ResponseWriter	interface ¡"
+			],
+			[
+				"LO",
+				"LOG_DIR	 Ɩ"
+			],
+			[
+				"orreq",
+				"orderRequestSize	 ƒ"
+			],
+			[
+				"or",
+				"orderTotalCost	 ƒ"
+			],
+			[
+				"maxre",
+				"maxrequestsize	[]MethodStatisticsOrder ν"
+			],
+			[
+				"reg",
+				"regexp	 package ρ"
+			],
+			[
+				"ma",
+				"maxrequestcount	[]MethodStatisticsOrder ν"
+			],
+			[
+				"m",
+				"maxrequestcount	[]MethodStatisticsOrder ν"
+			],
+			[
+				"Me",
+				"MethodStatisticsOrder	struct ʈ"
+			],
+			[
+				"l",
+				"logfile	string ν"
+			],
+			[
+				"t",
+				"time	string ν"
+			],
+			[
+				"Sprint",
+				"Sprintf	string ƒ"
+			],
+			[
+				"maxmeth",
+				"maxmethodcostlogid	string ν"
+			],
+			[
+				"maxtotal",
+				"maxtotalcostlogid	string ν"
+			],
+			[
+				"maxrequs",
+				"maxrequestsize	int ν"
+			],
+			[
+				"lo",
+				"logid	string ν"
+			],
+			[
+				"Spr",
+				"Sprintln	string ƒ"
+			],
+			[
+				"Ne",
+				"NewMethodCollection	*MethodCollection ƒ"
+			],
+			[
+				"log",
+				"logfile	string ν"
+			],
+			[
+				"New",
+				"NewMethodStat	*MethodStatistics ƒ"
+			],
+			[
+				"Meth",
+				"MethodInfo	struct ʈ"
+			],
+			[
+				"add",
+				"addLogFile	error ƒ"
+			],
+			[
+				"sp",
+				"Sprintln	string ƒ"
+			],
+			[
+				"fp",
+				"Fprintln	n int, err error ƒ"
+			],
+			[
+				"f",
+				"Fprintln	n int, err error ƒ"
+			],
+			[
+				"req",
+				"requestsize	int ν"
+			],
+			[
+				"me",
+				"methodcost	int ν"
+			],
+			[
+				"RegReq",
+				"RegRequestSize	int ƒ"
+			],
+			[
+				"RegM",
+				"RegMethodCost	int ƒ"
+			],
+			[
+				"R",
+				"RegGroup	string ƒ"
+			],
+			[
+				"Rge",
+				"RegServer	string ƒ"
+			],
+			[
+				"Reg",
+				"RegClient	string ƒ"
+			],
+			[
+				"Re",
+				"RegErr	string ƒ"
+			],
+			[
+				"fin",
+				"FindString	string ƒ"
+			],
+			[
+				"Meh",
+				"MethodRecord	struct ʈ"
+			],
+			[
+				"Tr",
+				"TrimSuffix	string ƒ"
+			],
+			[
+				"fu",
+				"func	func {...} ʂ"
+			],
+			[
+				"rea",
+				"reader	*bufio.Reader ν"
+			],
+			[
+				"Open",
+				"OpenFile	file *os.File, err error ƒ"
+			],
+			[
+				"str",
+				"strings	 package ρ"
+			],
+			[
+				"Fp",
+				"Fprintln	n int, err error ƒ"
+			],
+			[
+				"H",
+				"HandleFunc	 ƒ"
+			],
+			[
+				"Resp",
+				"ResponseWriter	interface ¡"
+			],
+			[
+				"Rea",
+				"ReadLine	line []byte, isPrefix bool, err error ƒ"
+			],
+			[
+				"Lo",
+				"LOG_FILE	 Ɩ"
+			],
+			[
+				"Prin",
+				"Println	 ƒ"
+			],
+			[
+				"sc",
+				"ScanLines	advance int, token []byte, err error ƒ"
+			],
+			[
+				"p",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"ss",
+				"Sscanln	n int, err error ƒ"
+			],
+			[
+				"pr",
+				"Println	 ƒ"
+			],
+			[
+				"Pr",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"imp",
+				"import	import (...) ʂ"
+			],
+			[
+				"getI",
+				"getInstance"
+			],
+			[
+				"exch",
+				"ExchangeDef"
+			],
+			[
+				"dele",
+				"deleteItembyTemplateID"
+			],
+			[
+				"syn",
+				"synthesis_id"
+			],
+			[
+				"Ex",
+				"Exchange"
+			],
+			[
+				"co",
+				"cost"
+			],
+			[
+				"ex",
+				"ex_id"
+			],
+			[
+				"ass",
+				"assertEquals"
+			],
+			[
+				"addEx",
+				"addFreeExtractNum"
+			],
+			[
+				"upda",
+				"updateExtract"
+			],
+			[
+				"addG",
+				"addGeneByTemplate"
+			],
+			[
+				"gene",
+				"geneBag"
+			],
+			[
+				"drop",
+				"drop_genes"
+			],
+			[
+				"dr",
+				"drop_genes"
+			],
+			[
+				"emp",
+				"empty_num"
+			],
+			[
+				"gen",
+				"geneBag"
+			],
+			[
+				"ex_",
+				"ex_id"
+			],
+			[
+				"getE",
+				"getExtractList"
+			],
+			[
+				"max",
+				"max_num"
+			],
+			[
+				"Gen",
+				"GeneLogic"
+			],
+			[
+				"arra",
+				"array"
+			],
+			[
+				"Cur",
+				"CurrencyDAO"
+			],
+			[
+				"Cu",
+				"CurrencyDAO"
+			],
+			[
+				"con",
+				"conf"
+			],
+			[
+				"array_ke",
+				"array_key_exists"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/main/main.go",
+			"settings":
+			{
+				"buffer_size": 114,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/server.go",
+			"settings":
+			{
+				"buffer_size": 554,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/request.go",
+			"settings":
+			{
+				"buffer_size": 830,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/response.go",
+			"settings":
+			{
+				"buffer_size": 751,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/User/go_build.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 521.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/woodpile/Code/project/Mine/webserver",
+		"/Users/woodpile/Code/project/Mine/webserver/src",
+		"/Users/woodpile/Code/project/Mine/webserver/src/main"
+	],
+	"file_history":
+	[
+		"/Users/woodpile/Code/project/Mine/webserver/src/main/request.go",
+		"/Users/woodpile/Code/golang/src/analysis_rpc_log/collectmethod.go",
+		"/Users/woodpile/Code/golang/src/getlog_client/getlog.go",
+		"/Users/woodpile/Code/golang/src/test/testmap.go",
+		"/Users/woodpile/Code/golang/src/test/lll.json",
+		"/Users/woodpile/Code/golang/src/test/testJsonCase.go",
+		"/Users/woodpile/Downloads/getFake",
+		"/Users/woodpile/Code/golang/src/getlog_client/search.gtpl",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/User/go_build.sublime-build",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/btstore_scripts/json_file.txt",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/GeneDAO.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/test/GeneTest.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/Gene.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/item/FashionDressItem.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/currency/CurrencyLogic.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/UserObj.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/bag/Bag.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/item/GiftItem.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/COPY",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/currency/doc/currency.sql",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/currency/CurrencyDAO.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/currency/Currency.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Currency.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/currency/test/CurrencyTest.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/item/Item.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/item/LotteryItem.class.php",
+		"/Users/woodpile/Code/DOC/射击项目/导出工具和文件/服务器导出目录/item.json",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/Bag.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/BAG",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/battle/BattleProxy.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/build.sh",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/IExchange.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/Method.cfg.php",
+		"/Users/woodpile/Code/DOC/射击项目/导出工具和文件/服务器导出目录/exchange.json",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/ExchangeLogic.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/test/ExchangeTest.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Exchange.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/CopyLogic.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/CopyUtil.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/Copy.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/EnCopy.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/doc/gene.sql",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/GeneBag.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/GeneLogic.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/item/GeneItem.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/ICopy.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/lib/data/IQueryCache.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Item.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/CopyDao.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/CopyTeam.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/CopyTeam.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Copy.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/COPY_SET",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/COPY_CHOOSE",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/COPY_ACT",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/Copy.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/btstore_scripts/Copy.csv.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/CABIN_OPEN",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/Exchange.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/JIERIHUODONG",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/city/EnCity.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/battle/EnBattle.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/ExchangeDAO.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/EXCHANGE",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/EXCAVATE",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Gene.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/doc/exchange.sql",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/exchange/doc/exchange.xml",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/gene/IGene.class.php",
+		"/Users/woodpile/Code/DOC/射击项目/导出工具和文件/服务器导出目录/vip.json",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/EnUser.class.php",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/GoGdb/Default.sublime-keymap",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/DocBlockr/Base File.sublime-settings",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/OtherUserObj.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/lib/ServerProxy.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/UserDao.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/User.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/UserLogic.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/script/AdjustUserCopyInfo.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/User.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/test/UserTest.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/User4BBpayDao.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/lib/data/NewData.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/lib/data/IdGenerator.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/crossteam/CrossTeam.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/CAPTAIN_ROOM",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/currency/ICurrency.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/mail/EnMail.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/EMBLEM",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/User/GoSublime.sublime-settings",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/GoSublime/GoSublime.sublime-settings",
+		"/Users/woodpile/Library/Application Support/Sublime Text 3/Packages/GoGdb/GoGdb.sublime-settings",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/3dshoot-rpcfw.sublime-project",
+		"/Users/woodpile/Downloads/vip.json",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/script/BattleRecordRestoreItem.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/battle/test/BattleTestProxy.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/BattleAddr.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Battle.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/Battle.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/task/test/BeatArmyLevelTest.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/boss/doc/boss_attack.sql",
+		"/Users/woodpile/Code/DOC/射击项目/导出工具和文件/服务器导出目录/defaultConfig.json",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Statistics.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/DefaultConfig.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/btstore_scripts/conditions.json",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/Statistics.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/SKILL_TREE",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/btstore_scripts/SYNTHESIS",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/def/Define.def.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/copy/scripts/dungeon_elite_list.csv",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/dataproxy.xml",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/hero/OtherHeroObj.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/task/test/OperateTest.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/OLYMPIC",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/conf/User.cfg.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/hero/IHero.class.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/exlib/Smarty-3.0.8/libs/sysplugins/smarty_internal_filter_handler.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/HERO",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/HERO_EXP",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/data/btstore/HERO_REBIRTH",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/script/ArenaGenerateLuckyPosition.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/script/GenCoverage.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/user/script/genRandomNameSql.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/build/Merge.php",
+		"/Users/woodpile/Code/3Dshoot/rpcfw/module/arena/ArenaRound.class.php"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"err",
+			"fmt",
+			"dnp",
+			"name",
+			"d",
+			"src",
+			"int8",
+			"handler",
+			"...)",
+			"src",
+			"16进制",
+			"maxtotalcost",
+			"maxframecost",
+			"maxrequestcount",
+			"name",
+			"err",
+			"client",
+			"客户端地址",
+			"client",
+			"单次最大响应大小",
+			"\"+\"",
+			"substr",
+			"maxtotalcostlogid",
+			"maxresponsesize",
+			"maxtotalcost",
+			"maxtotalcostlogid",
+			"maxrequestcountlogid",
+			"maxrequestcount",
+			"int",
+			"prefix",
+			"fn",
+			"logfile",
+			"float32",
+			"name",
+			"...)",
+			"m.",
+			"m",
+			"name",
+			"POST",
+			"success",
+			"requestsize",
+			"m",
+			"name",
+			"printMethods",
+			"name",
+			"analysis_rpc_log",
+			"request",
+			"g_regRequestSize",
+			"method cost",
+			"g_regMethodCost",
+			"framework",
+			"g_regFrameCost",
+			"g_regTotalCost",
+			"g_regRequestCount",
+			"g_regRequestCout",
+			"g_regUid",
+			"pid",
+			"g_regPid",
+			"g_regGroup",
+			"g_regServer",
+			"g_regTime",
+			"g_regErr",
+			"logid",
+			"g_regLogid",
+			"regLogid",
+			"regMethod",
+			"name",
+			"regMethod",
+			"analysis_rpc_log",
+			"name",
+			"method",
+			"int8",
+			"addMethodLog",
+			"name",
+			"int8",
+			"sep",
+			"int8",
+			"analysis_rpc_log",
+			"sep",
+			"suffix",
+			"substr",
+			"...)",
+			"sep",
+			"substr",
+			"args[1]",
+			"data",
+			"substr",
+			"ReadFile",
+			"atEOF",
+			"getlog_client",
+			"maxex",
+			"max",
+			"DEFAULTCONFIG",
+			"\"itemClass\":7,",
+			"level",
+			"addItemByTemplateID",
+			"subchapter",
+			"itemID",
+			"Exchange",
+			"extract",
+			"setVip",
+			"value",
+			"search",
+			"value",
+			"key",
+			"getBattleToken",
+			"win",
+			"window",
+			"subMoneyByType",
+			"gene",
+			"getLevel",
+			"CURRENCY_EXCHANGE_RCTOGC",
+			"CurrencyDef",
+			"btstore_get",
+			"Fake",
+			"getRcToGcTime",
+			"SysException",
+			"Sys",
+			"search",
+			"CURRENCY_SQL_NUM_RCTOGC",
+			"GENE",
+			"Gene",
+			"gene",
+			"Gene",
+			"GENE",
+			"GeneDef",
+			"Gene",
+			"if（GeneDef"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"ExchangeLogic",
+			"DefaultConfigDef",
+			"CURRENCY",
+			"Currency"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/main/main.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								73,
+								73
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"open_with_edit": true,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/main/server.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								240,
+								240
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"open_with_edit": true,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/main/request.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 830,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8,
+								12
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/main/response.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 751,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								750,
+								750
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"open_with_edit": true,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.MarGo-output":
+	{
+		"height": 100.0
+	},
+	"output.exec":
+	{
+		"height": 194.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "Mine_server.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"genedef",
+				"def/Gene.def.php"
+			],
+			[
+				"genelo",
+				"module/gene/GeneLogic.class.php"
+			],
+			[
+				"metho",
+				"conf/Method.cfg.php"
+			],
+			[
+				"cross",
+				"module/crossteam/CrossTeam.class.php"
+			],
+			[
+				"user",
+				"module/user/UserObj.class.php"
+			],
+			[
+				"json",
+				"btstore_scripts/json_file.txt"
+			],
+			[
+				"cursql",
+				"module/currency/doc/currency.sql"
+			],
+			[
+				"cur",
+				"module/currency/CurrencyLogic.class.php"
+			],
+			[
+				"curr",
+				"module/currency/CurrencyLogic.class.php"
+			],
+			[
+				"bagclas",
+				"module/bag/Bag.class.php"
+			],
+			[
+				"me",
+				"conf/Method.cfg.php"
+			],
+			[
+				"enco",
+				"module/copy/EnCopy.class.php"
+			],
+			[
+				"genete",
+				"module/gene/test/GeneTest.class.php"
+			],
+			[
+				"ico",
+				"module/copy/ICopy.class.php"
+			],
+			[
+				"cop",
+				"module/copy/Copy.class.php"
+			],
+			[
+				"copy",
+				"data/btstore/COPY"
+			],
+			[
+				"excahngedef",
+				"def/Exchange.def.php"
+			],
+			[
+				"gene.cl",
+				"module/gene/Gene.class.php"
+			],
+			[
+				"usercl",
+				"module/user/UserObj.class.php"
+			],
+			[
+				"geneclas",
+				"module/gene/Gene.class.php"
+			],
+			[
+				"igene",
+				"module/gene/IGene.class.php"
+			],
+			[
+				"genel",
+				"module/gene/GeneLogic.class.php"
+			],
+			[
+				"enba",
+				"module/battle/EnBattle.class.php"
+			],
+			[
+				"battlepr",
+				"module/battle/BattleProxy.class.php"
+			],
+			[
+				"stat",
+				"def/Statistics.def.php"
+			],
+			[
+				"genecla",
+				"module/gene/Gene.class.php"
+			],
+			[
+				"curda",
+				"module/currency/CurrencyDAO.class.php"
+			],
+			[
+				"defaul",
+				"def/DefaultConfig.def.php"
+			],
+			[
+				"genetest",
+				"module/gene/test/GeneTest.class.php"
+			],
+			[
+				"userde",
+				"def/User.def.php"
+			],
+			[
+				"otherus",
+				"module/user/OtherUserObj.class.php"
+			],
+			[
+				"userob",
+				"module/user/UserObj.class.php"
+			],
+			[
+				"ihero",
+				"module/hero/IHero.class.php"
+			],
+			[
+				"gnelo",
+				"module/gene/GeneLogic.class.php"
+			],
+			[
+				"geneb",
+				"module/gene/GeneBag.class.php"
+			],
+			[
+				"genedao",
+				"module/gene/GeneDAO.class.php"
+			],
+			[
+				"gened",
+				"module/gene/GeneDAO.class.php"
+			],
+			[
+				"gne",
+				"module/gene/Gene.class.php"
+			],
+			[
+				"genesql",
+				"module/gene/doc/gene.sql"
+			],
+			[
+				"gene",
+				"module/gene/test/GeneTest.class.php"
+			],
+			[
+				"itemdef",
+				"def/Item.def.php"
+			],
+			[
+				"geneitem",
+				"module/item/GeneItem.class.php"
+			],
+			[
+				"geneclass",
+				"module/gene/Gene.class.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 87.0,
+		"selected_items":
+		[
+			[
+				"additemb",
+				"addItemByTemplateID"
+			],
+			[
+				"setvip",
+				"setVip"
+			]
+		],
+		"width": 485.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 202.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -44,8 +44,22 @@ public:
     bool isOpened(void);
     //掀开格子并显示属性
     void openAndDoAtrrib(void);
+    //掀开格子并标记
+    void openAndFlag(void);
     //重新合上格子
     void closeAndRecover(void);
+    //重刷数字标记
+    void refreshNumTag(void);
+
+    //设置格子的外部相对坐标
+    void setOutPosition(cocos2d::Point);
+    //获得格子的外部相对坐标
+    cocos2d::Point getOutPosition(void);
+    
+    //从场景隐藏,不显示也不接受触摸输入
+    void hideFromGame(void);
+    //从场景显示,也开始接受触摸输入
+    void showFromGame(void);
 
 private:
     //覆盖层滑动 随滑动改变形状
@@ -60,8 +74,6 @@ private:
     void coverSlideBack(void);
     //覆盖层滑动返回后的回调函数
     void slideCoverBackCallback(cocos2d::Node* sender);
-    //覆盖层恢复
-    void coverRevocer(void);
     
     //重新合上格子的中间阶段的回调函数
     void closeInMiddleCallback(cocos2d::Node* sender);
@@ -82,6 +94,12 @@ private:
     //成员数据 格子的外在逻辑坐标
     int _box_x;
     int _box_y;
+    //成员数据 是否已打开
+    bool _isopen;
+    //成员数据 是否已标记
+    bool _isflag;
+    //成员数据 外部相对坐标
+    cocos2d::Point _OutPos;
     //成员数据 格子的逻辑属性
     MBoxAttr _attribe;
     //成员对象 标记底板
@@ -92,6 +110,8 @@ private:
     cocos2d::Point _basePos;
     //成员对象 触摸移动的起始点 活动数据
     cocos2d::Point _moveStartPos;
+    //成员对象 是否接受触摸事件
+    bool _bCanTouch;
     
     //成员对象 所处游戏场景
     GameScene* _game;

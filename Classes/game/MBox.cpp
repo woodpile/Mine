@@ -11,7 +11,8 @@ enum {
 
 MBox::MBox(void)
 : _box_x(0), _box_y(0), _basePos(Point(0, 0)), _moveStartPos(Point(0, 0)),
-_tag(nullptr), _cover(nullptr), _box_id(0), _game(nullptr)
+_tag(nullptr), _cover(nullptr), _box_id(0), _game(nullptr), _bCanTouch(true),
+_isopen(false), _isflag(false), _OutPos(Point(0,0))
 {
     return;
 }
@@ -68,10 +69,13 @@ void MBox::onEnter(void)
     //读取格子内容尺寸
     auto cs = this->getContentSize();
     //生成覆盖层
-    auto pSpriteText = Director::getInstance()->getTextureCache()->getTextureForKey("white.png");
-    _cover = Sprite::createWithTexture(pSpriteText);
-    _cover->setPosition(cs.width / 2, cs.height / 2);
-    this->addChild(_cover, 2);
+    if (false == _isopen)
+    {
+        auto pSpriteText = Director::getInstance()->getTextureCache()->getTextureForKey("white.png");
+        _cover = Sprite::createWithTexture(pSpriteText);
+        _cover->setPosition(cs.width / 2, cs.height / 2);
+        this->addChild(_cover, 2);
+    }
     
     //记录格子的锚点
     _basePos = this->getAnchorPointInPoints();
@@ -110,12 +114,23 @@ void MBox::setAttr(int n, MBombType bt)
     _attribe.num = n;
     _attribe.bombtype = bt;
 }
+//设置格子的外部相对坐标
+void MBox::setOutPosition(cocos2d::Point outpos)
+{
+    _OutPos = outpos;
+}
+
+//获得格子的外部相对坐标
+cocos2d::Point MBox::getOutPosition(void)
+{
+    return _OutPos;
+}
 
 //引擎 触摸行为按下
 bool MBox::onTouchBegan(Touch* touch, Event* event)
 {
     //覆盖层已删除的情况下不处理触摸行为
-    if (nullptr == _cover)
+    if (nullptr == _cover || false == _bCanTouch)
     {
         return false;
     }
@@ -202,7 +217,10 @@ void MBox::coverClick(void)
     log("clickCover %d %d", _box_x, _box_y);
     
     //反应到游戏场景
-    _game->boxBeClick(_box_id);
+    if (false == _game->boxBeClick(_box_x, _box_y))
+    {
+        return;
+    }
     
     //阐述覆盖层
     coverDel();
@@ -232,6 +250,9 @@ void MBox::coverDrag(Touch* touch)
 //覆盖层删除
 void MBox::coverDel(void)
 {
+    //设置格子状态为打开
+    _isopen = true;
+
     if (nullptr == _cover)
     {
         return;
@@ -240,11 +261,7 @@ void MBox::coverDel(void)
     _cover->removeFromParent();
     _cover = nullptr;
 }
-//覆盖层恢复
-void coverRevocer(void)
-{
-    
-}
+
 //覆盖层滑动返回
 void MBox::coverSlideBack(void)
 {
@@ -267,6 +284,7 @@ void MBox::showTag(bool show)
         //创建显示标记的底板
         _tag = Sprite::create();
         _tag->setPosition(getContentSize().width / 2, getContentSize().height / 2);
+        _tag->setCascadeOpacityEnabled(true);
         this->addChild(_tag, 1);
         //显示属性标记
         showAttrTag();
@@ -300,6 +318,7 @@ void MBox::doAttrRet(void)
         //创建显示标记的底板
         _tag = Sprite::create();
         _tag->setPosition(getContentSize().width / 2, getContentSize().height / 2);
+        _tag->setCascadeOpacityEnabled(true);
         this->addChild(_tag, 1);
     }
     //处理炸弹属性
@@ -329,6 +348,7 @@ void MBox::flagToBomb(void)
         //创建显示标记的底板
         _tag = Sprite::create();
         _tag->setPosition(getContentSize().width / 2, getContentSize().height / 2);
+        _tag->setCascadeOpacityEnabled(true);
         this->addChild(_tag, 1);
     }
     //创建玩家标记
@@ -352,6 +372,11 @@ bool MBox::resetAttr(int n, MBombType bt)
 //是否已掀开
 bool MBox::isOpened(void)
 {
+    if (true == _isopen)
+    {
+        return true;
+    }
+
     if (nullptr == _cover)
     {
         return true;
@@ -361,20 +386,50 @@ bool MBox::isOpened(void)
 //掀开格子并显示属性
 void MBox::openAndDoAtrrib(void)
 {
+    if (true == _isopen)
+    {
+        return;
+    }
+
     //阐述覆盖层
     coverDel();
     //删除后处理
     doAttrRet();
+
+    return;
+}
+//掀开格子并标记
+void MBox::openAndFlag(void)
+{
+    if (true == _isflag)
+    {
+        return;
+    }
+
+    //阐述覆盖层
+    coverDel();
+    //标记为炸弹
+    flagToBomb();
+
+    return;
 }
 //重新合上格子
 void MBox::closeAndRecover(void)
 {
+    if (false == _isopen && false == _isflag)
+    {
+        return;
+    }
     if (nullptr != _cover)
     {
         return;
     }
-    auto as = ScaleTo::create(0.1f, 1, 0);
-    auto asb = ScaleTo::create(0.1f, 1, 1);
+    this->stopAllActions();
+    
+    auto as = ScaleTo::create(0.1f, this->getScaleX(), 0);
+    auto asb = ScaleTo::create(0.1f, this->getScaleX(), this->getScaleY());
+//    auto as = ScaleTo::create(0.1f, 1, 0);
+//    auto asb = ScaleTo::create(0.1f, 1, 1);
     auto af = CallFuncN::create(CC_CALLBACK_1(MBox::closeInMiddleCallback, this));
     auto af2 = CallFuncN::create(CC_CALLBACK_1(MBox::closeFinishCallback, this));
     this->runAction(Sequence::create(as, af, asb, af2, NULL));
@@ -393,6 +448,53 @@ void MBox::closeInMiddleCallback(cocos2d::Node* sender)
 //重新合上格子的完成以后的回调函数
 void MBox::closeFinishCallback(cocos2d::Node* sender)
 {
+    _isopen = false;
+    _isflag = false;
     _game->reDiffusion();
+}
+//重刷数字标记
+void MBox::refreshNumTag(void)
+{
+    if (nullptr == _tag)
+    {
+        return;
+    }
+    auto tn = (Label*)(_tag->getChildByTag(TAG_TAG_NUM));
+    if (nullptr == tn)
+    {
+        auto sn = String::createWithFormat("%d", _attribe.num);
+        auto tn = Label::createWithTTF(sn->getCString() , CF_F("font_hei"), 80);
+        tn->setPosition(0, 0);
+        _tag->addChild(tn, 1, TAG_TAG_NUM);
+    }
+    else
+    {
+        auto sn = String::createWithFormat("%d", _attribe.num);
+        tn->setString(sn->getCString());
+    }
+
+    _tag->stopAllActions();
+    _tag->runAction(Sequence::create(ScaleTo::create(0.3f, 1.3), ScaleTo::create(0.3f, 1), NULL));
+}
+
+//从场景隐藏,不显示也不接受触摸输入
+void MBox::hideFromGame(void)
+{
+    this->setCascadeOpacityEnabled(true);
+    this->setOpacity(0);
+
+//    this->setVisible(false);
+
+    _bCanTouch = false;
+}
+
+//从场景显示,也开始接受触摸输入
+void MBox::showFromGame(void)
+{
+    this->setCascadeOpacityEnabled(true);
+    this->setOpacity(255);
+//    this->setVisible(true);
+
+    _bCanTouch = true;
 }
 

@@ -16,6 +16,7 @@ public:
     //菜单回调函数
     void menuCloseCallback(cocos2d::Ref* pSender);
     void menuGame(cocos2d::Ref* pSender);
+    void menuNetGame(cocos2d::Ref* pSender);
 
     //引擎
     CREATE_FUNC(GameMenu);

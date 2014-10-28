@@ -51,7 +51,7 @@ void MMap::randRefresh(void)
     }
     this->proMapNum();
     
-    this->printMap();
+//    this->printMap();
 }
 
 //计算地图格子的数字
@@ -161,7 +161,7 @@ void MMap::changeMap(int w, int h, int ex_num)
     //重新计算格子数字
     this->proMapNum();
     
-    this->printMap();
+//    this->printMap();
 }
 //补充炸弹数量
 void MMap::fillEnoughBomb(void)
@@ -192,29 +192,29 @@ void MMap::fillEnoughBomb(void)
 }
 
 //在日志中打印地图内容
-void MMap::printMap(void)
-{
-    //打印bomb
-    printf("bomb\n");
-    for (int i = 0; i < _heigh; i++)
-    {
-        for (int j = 0; j < _width; j++)
-        {
-            int pos = i * _width + j;
-            printf("%d ", _mapdata[pos].bomb);
-        }
-        printf("\n");
-    }
-    
-    //打印num
-    printf("num\n");
-    for (int i = 0; i < _heigh; i++)
-    {
-        for (int j = 0; j < _width; j++)
-        {
-            int pos = i * _width + j;
-            printf("%d ", _mapdata[pos].num);
-        }
-        printf("\n");
-    }
-}
+//void MMap::printMap(void)
+//{
+//    //打印bomb
+//    printf("bomb\n");
+//    for (int i = 0; i < _heigh; i++)
+//    {
+//        for (int j = 0; j < _width; j++)
+//        {
+//            int pos = i * _width + j;
+//            printf("%d ", _mapdata[pos].bomb);
+//        }
+//        printf("\n");
+//    }
+//    
+//    //打印num
+//    printf("num\n");
+//    for (int i = 0; i < _heigh; i++)
+//    {
+//        for (int j = 0; j < _width; j++)
+//        {
+//            int pos = i * _width + j;
+//            printf("%d ", _mapdata[pos].num);
+//        }
+//        printf("\n");
+//    }
+//}

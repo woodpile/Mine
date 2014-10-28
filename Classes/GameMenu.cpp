@@ -1,5 +1,7 @@
 #include "GameMenu.h"
 #include "game/GameScene.h"
+#include "game/GameSceneNet.h"
+#include "game/PageSelectScene.h"
 #include "config/Config.h"
 
 USING_NS_CC;
@@ -47,9 +49,16 @@ bool GameMenu::init()
     auto enterGameItem = MenuItemImage::create("Start_Game.png", "Start_Game_select.png",
                                            CC_CALLBACK_1(GameMenu::menuGame, this));
     enterGameItem->setPosition(visibleSize.width/2 + origin.x, visibleSize.height * 2 / 5 + origin.y);
+    
+    //创建进入网络游戏场景的菜单键
+    auto enterNetGameItem = MenuItemImage::create("Start_Game_Net.png", "Start_Game_Net_select.png",
+                                               CC_CALLBACK_1(GameMenu::menuNetGame, this));
+    enterNetGameItem->setPosition(visibleSize.width/2 + origin.x, visibleSize.height * 2 / 5 + origin.y - enterGameItem->getContentSize().height);
+    
     //创建主菜单
     Menu* pItemMenu = Menu::create();
     pItemMenu->addChild(enterGameItem);
+    pItemMenu->addChild(enterNetGameItem);
     pItemMenu->setPosition(0, 0);
     this->addChild(pItemMenu, 2);
 
@@ -60,6 +69,12 @@ bool GameMenu::init()
 void GameMenu::menuGame(Ref* pSender)
 {
     Director::getInstance()->replaceScene(GameScene::createScene());
+}
+
+//进入网络游戏场景菜单键的回调函数
+void GameMenu::menuNetGame(Ref* pSender)
+{
+    Director::getInstance()->replaceScene(PageSelectScene::createScene());
 }
 
 //退出游戏程序的菜单键的回调函数

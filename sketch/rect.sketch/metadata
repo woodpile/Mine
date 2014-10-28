@@ -5,16 +5,18 @@
 	<key>app</key>
 	<string>com.bohemiancoding.sketch3</string>
 	<key>build</key>
-	<integer>8054</integer>
+	<integer>7891</integer>
 	<key>commit</key>
-	<string>b2079fe10151ad0eef6cc553b7369ec78d67b9b5</string>
+	<string>debc570766a4cc5a2e31258967910f7e5776f485</string>
 	<key>fonts</key>
 	<array>
 		<string>STKaiti-SC-Regular</string>
+		<string>ArialMT</string>
 		<string>ComicSansMS-Bold</string>
+		<string>STHeitiSC-Light</string>
 	</array>
 	<key>length</key>
-	<integer>174783</integer>
+	<integer>490816</integer>
 	<key>version</key>
 	<integer>37</integer>
 </dict>

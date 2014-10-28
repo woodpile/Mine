@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "../config/Config.h"
 #include "MBox.h"
+#include "HelpBoard.h"
 
 USING_NS_CC;
 
@@ -21,6 +22,15 @@ void GameScene::onEnter()
 {
     //引擎
     Layer::onEnter();
+    
+    //初始化游戏格子
+    this->createNewGame();
+
+    //创建分数面板
+    this->initScoreInfoBoard();
+
+    //创建帮助面板
+    this->initHelpInfoBoard();
 }
 //引擎 移除图层时调用的方法
 void GameScene::onExit()
@@ -40,12 +50,10 @@ bool GameScene::init()
     //取屏幕逻辑尺寸
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
-    //visibleSize.height += origin.y;
-    //visibleSize.width += origin.x;
     
     //创建背景
     _backgroud = Sprite::create("back1.png");
-    _backgroud->setPosition(visibleSize.width / 2, visibleSize.height / 2 + origin.y);
+    _backgroud->setPosition(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y);
     addChild(_backgroud);
     log("backgroud sprite size %f, %f", _backgroud->getContentSize().width, _backgroud->getContentSize().height);
     
@@ -66,18 +74,6 @@ bool GameScene::init()
     pItemMenu->setPosition(visibleSize.width + origin.x, origin.y);
     this->addChild(pItemMenu);
     
-    //创建分数底板
-    auto score_board = Sprite::create("Scoreboard.png");
-    score_board->setPosition(visibleSize.width / 2,
-                             visibleSize.height + origin.y - score_board->getContentSize().height / 2);
-    this->addChild(score_board);
-    
-    //创建分数标签
-    _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 72);
-    _score_label->setColor(Color3B::BLACK);
-    _score_label->setPosition(score_board->getContentSize().width / 2, score_board->getContentSize().height / 2);
-    score_board->addChild(_score_label);
-    
     //初始化有关资源
     Director::getInstance()->getTextureCache()->addImage("white.png");
     Director::getInstance()->getTextureCache()->addImage("blue.png");
@@ -87,9 +83,6 @@ bool GameScene::init()
     _score = 0;
     _map = nullptr;
     _flag_reDifusion = false;
-    
-    //初始化游戏格子
-    this->createNewGame();
 
     return true;
 }
@@ -110,6 +103,47 @@ void GameScene::menuRestartCallback(Ref* pSender)
     this->resetScore();
     //创建新的游戏
     this->createNewGame();
+}
+
+//初始化帮助信息界面
+void GameScene::initHelpInfoBoard(void)
+{
+    //取屏幕逻辑尺寸
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
+    
+    auto helpBoard = HelpBoard::create();
+    auto sh = helpBoard->getContentSize();
+    if (visibleSize.height >= 960)
+    {
+        helpBoard->setPosition(sh.width / 2 + origin.x, sh.height / 2 + origin.y);
+    }
+    else
+    {
+        helpBoard->setPosition(sh.width / 2 + origin.x,
+                               sh.height / 2 + origin.y - 142);
+        helpBoard->setBoardCanMove(true);
+    }
+    this->addChild(helpBoard);
+}
+//初始化分数面板
+void GameScene::initScoreInfoBoard(void)
+{
+    //取屏幕逻辑尺寸
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Point origin = Director::getInstance()->getVisibleOrigin();
+
+    //创建分数底板
+    auto score_board = Sprite::create("Scoreboard.png");
+    score_board->setPosition(visibleSize.width / 2 + origin.x,
+                             visibleSize.height + origin.y - score_board->getContentSize().height / 2);
+    this->addChild(score_board);
+
+    //创建分数标签
+    _score_label = Label::createWithTTF("SCORE 0", CF_F("font_hei"), 72);
+    _score_label->setColor(Color3B::BLACK);
+    _score_label->setPosition(score_board->getContentSize().width / 2, score_board->getContentSize().height / 2);
+    score_board->addChild(_score_label);
 }
 
 //创建一个新的游戏
@@ -160,12 +194,8 @@ void GameScene::createNewGame(void)
 }
 
 //格子被点击
-void GameScene::boxBeClick(int boxid)
+bool GameScene::boxBeClick(int w, int h)
 {
-    //取格子坐标
-    auto w = (boxid - GameScene::BASE_BOX_ID) % _map->_width;
-    auto h = (boxid - GameScene::BASE_BOX_ID) / _map->_heigh;
-    
     log("box %d %d be clicked", w, h);
     
     //取格子属性
@@ -177,6 +207,8 @@ void GameScene::boxBeClick(int boxid)
     {
         this->procClickBoxSafe(w, h);
     }
+    
+    return true;
 }
 
 //处理一个格子爆炸

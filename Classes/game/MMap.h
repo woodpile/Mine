@@ -38,8 +38,8 @@ public:
     int _heigh;
 private:
     //在日志中打印地图内容
-    void printMap(void);
-    
+//    void printMap(void);
+
     //计算地图格子的数字
     void proMapNum(void);
     //计算一个格子的数字

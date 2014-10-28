@@ -16,28 +16,37 @@ public:
     virtual void onExit();
 
     //退出菜单键的回调函数
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    virtual void menuCloseCallback(cocos2d::Ref* pSender);
     //重新开始菜单键的回调函数
     void menuRestartCallback(cocos2d::Ref* pSender);
     
     //格子被点击
-    void boxBeClick(int boxid);
+    virtual bool boxBeClick(int w, int h);
     //格子被标记
-    void boxBeFlag(int w, int h);
+    virtual void boxBeFlag(int w, int h);
     //重新扩散一些盒子
-    void reDiffusion(void);
+    virtual void reDiffusion(void);
 
     //引擎
     CREATE_FUNC(GameScene);
-
-private:
+    
+protected:
     const int BASE_BOX_ID = 1000;
     
     //创建一个新的游戏
-    void createNewGame(void);
-    //初始化格子们
-    void initBoxes(void);
-    
+    virtual void createNewGame(void);
+
+    //初始化帮助信息界面
+    virtual void initHelpInfoBoard(void);
+    //初始化分数面板
+    virtual void initScoreInfoBoard(void);
+
+    //成员对象 背景精灵
+    cocos2d::Sprite* _backgroud;
+    //成员对象 分数标签
+    cocos2d::Label* _score_label;
+
+private:
     //处理一个有炸弹的格子被点击
     void procClickBoxBang(int w, int h);
     //处理一个安全的格子被点击
@@ -60,11 +69,6 @@ private:
     MMap* _map;
     //成员对象 分数
     int _score;
-    
-    //成员对象 背景精灵
-    cocos2d::Sprite* _backgroud;
-    //成员对象 分数标签
-    cocos2d::Label* _score_label;
 };
 
 #endif // __M_GAMESCENE_H__
