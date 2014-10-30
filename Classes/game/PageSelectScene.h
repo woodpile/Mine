@@ -43,15 +43,28 @@ public:
     //重新开始菜单键的回调函数
     void menuRestartCallback(cocos2d::Ref* pSender);
 
+    //引擎 触摸行为注册函数
+    virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+
     //页面格子触发选择页面
     void clickSelectPage(int w, int h);
 
     //返回登录信息
     void callbackUserLogin(void);
+    //返回地图的基本信息
+    void callbackGetMapInfo(int mapw, int maph);
     //展示格子的返回信息
-    void callbackShowPages(int mapw, int maph, NetPageAttr apages[] = nullptr, int arrlen = 0);
+    void callbackShowPages(NetPageAttr apages[] = nullptr, int arrlen = 0);
     //返回页面选择信息
     void callbackSelectPage(bool ret, int maxw, int maxh);
+
+    //返回连接错误信息
+    void callbackErrConnection(void);
+
+    //是否处于等待通信状态
+    bool isWaitNet(void);
 //protected:
 
 private:
@@ -67,16 +80,24 @@ private:
 
     //更新页面信息
     void updatePages(NetPageAttr apages[], int arrlen);
+    //刷新页面格子的显示情况
+    void refreshShowPages(void);
 
     //选中动画后的回调函数
     void selectActionCallback(cocos2d::Node* sender);
 
     //成员对象 是否已经登录
     bool _bLogin;
+    //成员对象 是否正在等待通信
+    bool _bWaitNet;
     //成员对象 选择的页面坐标
     int _page_w, _page_h;
     //成员对象 选择的页面内的最大格子坐标
     int _box_max_w, _box_max_h;
+    //成员对象 当前处于中间的页面的坐标
+    int _center_w, _center_h;
+    //成员对象 页面_wheel的上下边界值
+    cocos2d::Point _edge00, _edgeMM;
 
     //成员对象 总页数的长宽
     int _map_max_w;

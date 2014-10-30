@@ -146,6 +146,13 @@ void GameScene::initScoreInfoBoard(void)
     score_board->addChild(_score_label);
 }
 
+//是否处于等待通信状态
+bool GameScene::isWaitNet(void)
+{
+    //仅作为虚函数存在
+    return false;
+}
+
 //创建一个新的游戏
 void GameScene::createNewGame(void)
 {

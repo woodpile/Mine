@@ -130,7 +130,7 @@ cocos2d::Point MBox::getOutPosition(void)
 bool MBox::onTouchBegan(Touch* touch, Event* event)
 {
     //覆盖层已删除的情况下不处理触摸行为
-    if (nullptr == _cover || false == _bCanTouch)
+    if (nullptr == _cover || false == _bCanTouch || true == _game->isWaitNet())
     {
         return false;
     }
@@ -480,10 +480,10 @@ void MBox::refreshNumTag(void)
 //从场景隐藏,不显示也不接受触摸输入
 void MBox::hideFromGame(void)
 {
-    this->setCascadeOpacityEnabled(true);
-    this->setOpacity(0);
+//    this->setCascadeOpacityEnabled(true);
+//    this->setOpacity(0);
 
-//    this->setVisible(false);
+    this->setVisible(false);
 
     _bCanTouch = false;
 }
@@ -491,9 +491,9 @@ void MBox::hideFromGame(void)
 //从场景显示,也开始接受触摸输入
 void MBox::showFromGame(void)
 {
-    this->setCascadeOpacityEnabled(true);
-    this->setOpacity(255);
-//    this->setVisible(true);
+//    this->setCascadeOpacityEnabled(true);
+//    this->setOpacity(255);
+    this->setVisible(true);
 
     _bCanTouch = true;
 }

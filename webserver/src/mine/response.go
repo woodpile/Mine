@@ -8,9 +8,10 @@ import (
 )
 
 type responseData struct {
-	Err  string
-	Time string
-	Data string
+	ErrCode int32
+	Err     string
+	Time    string
+	Data    string
 }
 
 type NetResponse struct {
@@ -28,6 +29,7 @@ func (n *NetResponse) responseError(w http.ResponseWriter, e error) error {
 	n.resp.Err = fmt.Sprintf("err:%v", e)
 	n.resp.Time = ""
 	n.resp.Data = ""
+	n.resp.ErrCode = n.request.ErrCode
 
 	p, _ := json.Marshal(n.resp)
 	GetLogInstance().Println("response:", len(p), ":", string(p))
@@ -57,6 +59,7 @@ func (n *NetResponse) responseData(w http.ResponseWriter, d string) error {
 	n.resp.Err = "ok"
 	n.resp.Time = ""
 	n.resp.Data = d
+	n.resp.ErrCode = ERR_NOERR
 
 	//将response编码
 	p, err := json.Marshal(n.resp)

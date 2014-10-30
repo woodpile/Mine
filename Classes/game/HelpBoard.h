@@ -21,6 +21,7 @@ public:
     //创建格子
     static HelpBoard* create(void);
     static HelpBoard* createNet(void);
+    static HelpBoard* createWithTexture(cocos2d::Texture2D *pTexture);
     
     //引擎 初始化与去初始化
     virtual void onEnter(void);

@@ -35,6 +35,8 @@ public:
 
     //退出菜单键的回调函数
     virtual void menuCloseCallback(cocos2d::Ref* pSender);
+    //重新开始菜单键的回调函数
+    virtual void menuRestartCallback(cocos2d::Ref* pSender);
     
     //格子被点击
     virtual bool boxBeClick(int w, int h);
@@ -48,6 +50,11 @@ public:
     //插旗格子的返回信息
     void callbackFlagBox(int num, int bomb, NetBoxAttr aboxs[] = nullptr, int arrlen = 0);
 
+    //返回登录信息错误
+    void callbackErrNoLogin(void);
+    //返回连接错误信息
+    void callbackErrConnection(void);
+
     //重新扩散一些盒子
     virtual void reDiffusion(void);
     
@@ -55,7 +62,10 @@ public:
     virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
     virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
-    
+
+    //是否处于等待通信状态
+    virtual bool isWaitNet(void);
+
     //引擎
     CREATE_FUNC(GameSceneNet);
     
@@ -89,6 +99,9 @@ private:
     
     //是否可以滑动的标记
     bool _bCanTouch;
+
+    //是否在等待通信
+    bool _bWaitNet;
 
     //当前点击的格子tagid
     int _boxid_beClicked;

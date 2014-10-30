@@ -24,6 +24,10 @@ public:
 
     //设置页面的逻辑坐标
     void setPagePos(int w, int h);
+    //设置页面格子的基准pos
+    void setBasePosition(cocos2d::Point basepos);
+    //获取页面格子的基准pos
+    cocos2d::Point getBasePosition(void);
 
     //设置页面的进度百分比
     void setOpenPercent(double p);
@@ -32,6 +36,11 @@ public:
     //查询页面是否已经有人占用
     bool getPageOwn(void);
 
+    //从选择场景中隐藏
+    void hideFromScene(void);
+    //从选择场景中出现
+    void showFromScene(void);
+
 private:
     //成员对象 页面的逻辑坐标
     int _page_w, _page_h;
@@ -39,6 +48,11 @@ private:
     bool _hasown;
     //成员对象 页面进度百分比
     double _open_precent;
+    //成员对象 是否允许点击
+    bool _bCanTouch;
+
+    //成员对象 页面格子相对于_wheel的基准pos
+    cocos2d::Point _base_pos;
 
     //成员对象 百分比显示标签
     cocos2d::Label* _label_precent;

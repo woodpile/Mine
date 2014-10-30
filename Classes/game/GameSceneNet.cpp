@@ -17,12 +17,14 @@ USING_NS_CC;
 GameSceneNet* GameSceneNet::_pNetGameInstance = nullptr;
 
 GameSceneNet::GameSceneNet(void)
-: _bCanTouch(false), _boxid_beClicked(0), _page_maxw(0), _page_maxh(0), _page_w(0), _page_h(0)
+: _bCanTouch(false), _boxid_beClicked(0), _page_maxw(0), _page_maxh(0), _page_w(0), _page_h(0),
+_bWaitNet(false)
 {
 }
 
 GameSceneNet::~GameSceneNet(void)
 {
+    _pNetGameInstance = nullptr;
 }
 
 //创建承载本图层的场景
@@ -54,6 +56,11 @@ void GameSceneNet::menuCloseCallback(Ref* pSender)
     UtilNet::sendReleasePage();
     //返回游戏主菜单
     Director::getInstance()->replaceScene(PageSelectScene::createScene());
+}
+//重新开始菜单键的回调函数
+void GameSceneNet::menuRestartCallback(cocos2d::Ref* pSender)
+{
+    return;
 }
 
 //设置地图页面的值
@@ -107,6 +114,12 @@ void GameSceneNet::initScoreInfoBoard(void)
     score_board->addChild(_score_label);
 }
 
+//是否处于等待通信状态
+bool GameSceneNet::isWaitNet(void)
+{
+    return _bWaitNet;
+}
+
 //格子被点击
 bool GameSceneNet::boxBeClick(int w, int h)
 {
@@ -119,6 +132,8 @@ bool GameSceneNet::boxBeClick(int w, int h)
 
     UtilNet::sendBoxClick(_page_w, _page_h, w, h);
     _boxid_beClicked = GameScene::BASE_BOX_ID + h * (_page_maxw + 1) + w;
+
+    _bWaitNet = true;
     
     return false;
 }
@@ -135,6 +150,8 @@ void GameSceneNet::boxBeFlag(int w, int h)
 
     UtilNet::sendBoxFlag(_page_w, _page_h, w, h);
     _boxid_beClicked = GameScene::BASE_BOX_ID + h * (_page_maxw + 1) + w;
+
+    _bWaitNet = true;
 }
 
 
@@ -183,11 +200,15 @@ void GameSceneNet::loadGameGround(void)
     //发送请求加载页面上的格子信息
     UtilNet::sendLoadSubPage(_page_w, _page_h, _center_w, _center_h);
 
+    _bWaitNet = true;
+
     return;
 }
 
 void GameSceneNet::updateBoxs(int pw, int ph, NetBoxAttr aboxs[], int arrlen)
 {
+    _bWaitNet = false;
+
     auto boxsize = Director::getInstance()->getTextureCache()->getTextureForKey("blue.png")->getContentSize();
     
     for (int i = 0; i < arrlen; i++)
@@ -227,7 +248,7 @@ void GameSceneNet::updateBoxs(int pw, int ph, NetBoxAttr aboxs[], int arrlen)
         }
         
         if (aboxs[i].width - _center_w > 3 ||
-            aboxs[i].width - _center_w < -2 ||
+            aboxs[i].width - _center_w < -3 ||
             aboxs[i].hight - _center_h > 3 ||
             aboxs[i].hight - _center_h < -3)
         {
@@ -242,6 +263,8 @@ void GameSceneNet::updateBoxs(int pw, int ph, NetBoxAttr aboxs[], int arrlen)
 //点击格子的返回信息
 void GameSceneNet::callbackClickBox(int num, int bomb, NetBoxAttr aboxs[], int arrlen)
 {
+    _bWaitNet = false;
+
     if (0 == _boxid_beClicked)
     {
         return;
@@ -304,6 +327,8 @@ void GameSceneNet::callbackClickBox(int num, int bomb, NetBoxAttr aboxs[], int a
 //点击格子的返回信息
 void GameSceneNet::callbackFlagBox(int num, int bomb, NetBoxAttr aboxs[], int arrlen)
 {
+    _bWaitNet = false;
+
     if (0 == _boxid_beClicked)
     {
         return;
@@ -360,6 +385,58 @@ void GameSceneNet::reDiffusion(void)
 {
     //暂无需要,仅用于重载单机模式
     return;
+}
+
+//返回登录信息错误
+void GameSceneNet::callbackErrNoLogin(void)
+{
+    _bCanTouch = false;
+
+    auto errBoard = Sprite::create("Err_board.png");
+    errBoard->setPosition(_backgroud->getContentSize().width / 2,
+                          _backgroud->getContentSize().height / 2);
+    _backgroud->addChild(errBoard, 2000);
+
+    //创建退出菜单键
+    auto pExitItem = MenuItemImage::create("Return.png", "Return_big.png",
+                                           CC_CALLBACK_1(GameSceneNet::menuCloseCallback, this));
+    Menu* pItemMenu = Menu::create();
+    pItemMenu->addChild(pExitItem);
+    pItemMenu->setPosition(errBoard->getContentSize().width / 2,
+                           errBoard->getContentSize().height / 4);
+    errBoard->addChild(pItemMenu);
+
+    auto label = Label::createWithTTF("login massege\n is invalid\n please return", CF_F("font_hei"), 36);
+    label->setColor(Color3B::BLACK);
+    label->setPosition(errBoard->getContentSize().width / 2,
+                       errBoard->getContentSize().height * 2.7 / 4);
+    errBoard->addChild(label);
+}
+
+//返回连接错误信息
+void GameSceneNet::callbackErrConnection(void)
+{
+    _bCanTouch = false;
+
+    auto errBoard = Sprite::create("Err_board.png");
+    errBoard->setPosition(_backgroud->getContentSize().width / 2,
+                          _backgroud->getContentSize().height / 2);
+    _backgroud->addChild(errBoard, 2000);
+
+    //创建退出菜单键
+    auto pExitItem = MenuItemImage::create("Return.png", "Return_big.png",
+                                           CC_CALLBACK_1(GameSceneNet::menuCloseCallback, this));
+    Menu* pItemMenu = Menu::create();
+    pItemMenu->addChild(pExitItem);
+    pItemMenu->setPosition(errBoard->getContentSize().width / 2,
+                           errBoard->getContentSize().height / 4);
+    errBoard->addChild(pItemMenu);
+
+    auto label = Label::createWithTTF("connect server\n    failed\n please return", CF_F("font_hei"), 36);
+    label->setColor(Color3B::BLACK);
+    label->setPosition(errBoard->getContentSize().width / 2,
+                       errBoard->getContentSize().height * 2.7 / 4);
+    errBoard->addChild(label);
 }
 
 //引擎 触摸行为按下
@@ -480,7 +557,8 @@ void GameSceneNet::refreshShowBoxes(void)
             if (nullptr == bBox)
             {
                 _bCanTouch = false;
-                UtilNet::sendLoadSubPage(_page_w, _page_h, _center_w + i, _center_h + j);
+                _bWaitNet = true;
+                UtilNet::sendLoadSubPage(_page_w, _page_h, _center_w + 2 * i, _center_h + 2 * j);
                 return;
             }
 

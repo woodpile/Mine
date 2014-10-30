@@ -158,7 +158,7 @@ func (n *UserChan) dispatchMethod(u *userIndex) (string, error) {
 		return invalidRet, fmt.Errorf("invalid method", me)
 	}
 
-	GetLogInstance().Printf("dispatch method:%s.%s, data%s\n", mo, me, n.Data)
+	GetLogInstance().Printf("user %s dispatch method:%s.%s, data%s\n", u.name, mo, me, n.Data)
 
 	//调用方法
 	ret := rme.Call([]reflect.Value{reflect.ValueOf(u), reflect.ValueOf(n.Data)})
@@ -188,7 +188,7 @@ func (u *userIndex) StartUser() {
 			uc.Resp <- ret
 			uc.Err <- err
 			timeout = 0
-		case <-time.After(time.Second * 60):
+		case <-time.After(1 * time.Minute):
 			if 0 == timeout {
 				var m Matrix
 				m.ReleasePage(u, "")

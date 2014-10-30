@@ -8,15 +8,22 @@ import (
 	"net/http"
 )
 
-type NetRequest struct {
+type requestData struct {
 	User   string
 	Time   string
 	Method string
 	Data   string
 }
 
+type NetRequest struct {
+	req     requestData
+	ErrCode int32
+}
+
 func NewNetRequest() *NetRequest {
-	return &NetRequest{}
+	return &NetRequest{
+		ErrCode: ERR_NOERR,
+	}
 }
 
 // 解析请求内容到NetRequest
@@ -42,7 +49,7 @@ func (n *NetRequest) decodeRequest(r *http.Request) error {
 	// GetLogInstance().Println("decrypto:", string(dnp))
 
 	//对解密后的明文字符串json解码
-	json.Unmarshal(dnp, &n)
+	json.Unmarshal(dnp, &(n.req))
 	//GetLogInstance().Printf("lalala: %v\n", *n)
 	return nil
 }
@@ -52,9 +59,17 @@ type OutUserLogin struct {
 }
 
 func (n *NetRequest) createUserChannel() (string, error) {
-	ui := GetUmInstance().Login()
+	out := OutUserLogin{User: n.req.User}
 
-	out := OutUserLogin{User: ui.name}
+	//先检查用户是否已经登录
+	blogin, _ := GetUmInstance().CheckLogin(n.req.User)
+	if false == blogin {
+		//未登录的用户进行登录处理
+		ui := GetUmInstance().Login()
+		out.User = ui.name
+
+		go ui.StartUser()
+	}
 
 	//编码结果
 	ret, err := json.Marshal(out)
@@ -63,24 +78,24 @@ func (n *NetRequest) createUserChannel() (string, error) {
 		return "", fmt.Errorf("parse param failed, %v", err)
 	}
 
-	go ui.StartUser()
-
 	return string(ret), nil
 }
 
 // 取得用户线程通道
 func (n *NetRequest) getUserChannel() (chan *UserChan, error) {
-	if 16 != len(n.User) {
-		return nil, fmt.Errorf("invalid User string: %v", n.User)
+	if 16 != len(n.req.User) {
+		n.ErrCode = ERR_UNKONW
+		return nil, fmt.Errorf("invalid User string: %v", n.req.User)
 	}
 
 	um := GetUmInstance()
-	_, err := um.CheckLogin(n.User)
+	_, err := um.CheckLogin(n.req.User)
 	if nil != err {
+		n.ErrCode = ERR_NOLOGIN
 		return nil, fmt.Errorf("check login failed. %v", err)
 	}
 
-	return um.GetUserChan(n.User), nil
+	return um.GetUserChan(n.req.User), nil
 }
 
 // 分发请求的处理方法
@@ -91,7 +106,7 @@ func (n *NetRequest) dispatchMethod() (string, error) {
 		return "", err
 	}
 
-	uc := NewUserChan(n.Method, n.Data)
+	uc := NewUserChan(n.req.Method, n.req.Data)
 
 	cin <- uc
 

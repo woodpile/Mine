@@ -53,19 +53,46 @@ type MapAttr struct {
 	Pages   map[int]map[int]*PageAttr
 }
 
+type InGetMapInfo struct {
+}
+type OutGetMapInfo struct {
+	MapW int
+	MapH int
+}
+
+func (m *Matrix) GetMapInfo(u *userIndex, p string) (string, error) {
+	var out OutGetMapInfo
+	out.MapW = getMapInstance().MaxW
+	out.MapH = getMapInstance().MaxH
+
+	//编码结果
+	ret, err := json.Marshal(out)
+	if nil != err {
+		GetLogInstance().Println("encode ret failed,", err)
+		return "", fmt.Errorf("encode out failed, %v", err)
+	}
+
+	return string(ret), nil
+}
+
 type InShowPages struct {
+	Width  int
+	Height int
 }
 type OutShowPages struct {
-	MapW  int
-	MapH  int
 	Pages []OutPageAttr
 }
 
 func (m *Matrix) ShowPages(u *userIndex, p string) (string, error) {
+	//解析参数
+	var param InShowPages
+	err := json.Unmarshal([]byte(p), &param)
+	if nil != err {
+		GetLogInstance().Println("parse param failed,", err)
+	}
+
 	var out OutShowPages
-	out.MapW = getMapInstance().MaxW
-	out.MapH = getMapInstance().MaxH
-	getMapInstance().showPagesSimpleInfo(&out.Pages)
+	getMapInstance().showPagesSimpleInfo(param.Width, param.Height, &out.Pages)
 
 	//编码结果
 	ret, err := json.Marshal(out)
@@ -97,6 +124,9 @@ func (m *Matrix) SelcetPage(u *userIndex, p string) (string, error) {
 	}
 
 	//处理
+	if nil != u.GetSessionData("ownpage") {
+		return "", fmt.Errorf("user has a no-released page")
+	}
 	page := getMapInstance().getPage(param.PageW, param.PageH)
 	if nil != page && "" != page.own {
 		return "", fmt.Errorf("page has own (%d, %d)", param.PageW, param.PageH)
@@ -136,6 +166,7 @@ func (m *Matrix) ReleasePage(u *userIndex, p string) (string, error) {
 	}
 	page := sd.(*PageAttr)
 	getMapInstance().releasePage(u.name, page.Width, page.Height)
+	u.SetSessionData("ownpage", nil)
 	var out OutReleasePage
 	out.Ret = true
 
@@ -322,8 +353,8 @@ var gMap *MapAttr = nil
 func getMapInstance() *MapAttr {
 	if nil == gMap {
 		gMap = new(MapAttr)
-		gMap.MaxW = 3
-		gMap.MaxH = 3
+		gMap.MaxW = 30
+		gMap.MaxH = 30
 		gMap.Pages = make(map[int]map[int]*PageAttr, 0)
 		rand.Seed(time.Now().Unix())
 
@@ -346,23 +377,44 @@ func (m *MapAttr) getPage(w, h int) *PageAttr {
 	return m.Pages[h][w]
 }
 
-func (m *MapAttr) showPagesSimpleInfo(a *[]OutPageAttr) {
-	for w := 0; w <= m.MaxW; w++ {
-		for h := 0; h <= m.MaxH; h++ {
+func (m *MapAttr) showPagesSimpleInfo(w, h int, a *[]OutPageAttr) {
+	for dw := -4; dw <= 4; dw++ {
+		for dh := -4; dh <= 4; dh++ {
+			if w+dw > m.MaxW || w+dw < 0 || h+dh > m.MaxH || h+dh < 0 {
+				continue
+			}
+
 			o := new(OutPageAttr)
-			o.Width = w
-			o.Height = h
+			o.Width = w + dw
+			o.Height = h + dh
 			o.HasOwn = false
 			o.OpenPercent = 0.0
-			if nil != m.Pages[h] && nil != m.Pages[h][w] {
-				o.OpenPercent = float32(m.Pages[h][w].numOpened) * 100.0 / float32((m.Pages[h][w].MaxW+1)*(m.Pages[h][w].MaxH+1))
-				if "" != m.Pages[h][w].own {
+			p := m.getPage(w+dw, h+dh)
+			if nil != p {
+				o.OpenPercent = float32(p.numOpened) * 100.0 / float32((p.MaxW+1)*(p.MaxH+1))
+				if "" != p.own {
 					o.HasOwn = true
 				}
 			}
 			*a = append(*a, *o)
 		}
 	}
+	// for w := 0; w <= m.MaxW; w++ {
+	// 	for h := 0; h <= m.MaxH; h++ {
+	// 		o := new(OutPageAttr)
+	// 		o.Width = w
+	// 		o.Height = h
+	// 		o.HasOwn = false
+	// 		o.OpenPercent = 0.0
+	// 		if nil != m.Pages[h] && nil != m.Pages[h][w] {
+	// 			o.OpenPercent = float32(m.Pages[h][w].numOpened) * 100.0 / float32((m.Pages[h][w].MaxW+1)*(m.Pages[h][w].MaxH+1))
+	// 			if "" != m.Pages[h][w].own {
+	// 				o.HasOwn = true
+	// 			}
+	// 		}
+	// 		*a = append(*a, *o)
+	// 	}
+	// }
 }
 
 func (m *MapAttr) selectPage(n string, w, h int) bool {

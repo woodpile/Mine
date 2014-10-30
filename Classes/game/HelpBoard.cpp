@@ -38,6 +38,15 @@ HelpBoard* HelpBoard::createNet(void)
     return pBoard;
 }
 
+HelpBoard* HelpBoard::createWithTexture(cocos2d::Texture2D *pTexture)
+{
+    auto *pHelp = new HelpBoard();
+    pHelp->initWithTexture(pTexture);
+    pHelp->autorelease();
+
+    return pHelp;
+}
+
 //引擎 加载面板时调用的方法 初始化
 void HelpBoard::onEnter(void)
 {

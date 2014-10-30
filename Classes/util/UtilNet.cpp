@@ -12,6 +12,7 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "UtilRc4.h"
+#include "ErrNet.h"
 #include "../game/GameSceneNet.h"
 #include "../game/PageSelectScene.h"
 
@@ -20,16 +21,36 @@ using namespace cocos2d::network;
 
 std::string _g_username = "";
 
-std::string g_strHost = "http://114.215.193.215:9991/mine";
+//std::string g_strHost = "http://114.215.193.215:9991/mine";
+std::string g_strHost = "http://127.0.0.1:9991/mine";
+
+bool UtilNet::dispatchErrCode(int errcode)
+{
+    if (errcode == ERR_NET_NOLOGIN) {
+        _g_username = "";
+        auto p = GameSceneNet::getInstance();
+        if (nullptr != p)
+        {
+            p->callbackErrNoLogin();
+        }
+    }
+
+    return true;
+}
 
 bool UtilNet::sendUserLogin(void)
 {
-    _g_username = "";
     return UtilNet::sendData(".UserLogin", "", "userlogin");
 }
 
-bool UtilNet::recvUserLogin(const char* pRes)
+bool UtilNet::recvUserLogin(int errcode, const char* pRes)
 {
+    if (ERR_NET_NOERR != errcode)
+    {
+        _g_username = "";
+        return false;
+    }
+    
     rapidjson::Document da;
     da.Parse<rapidjson::kParseDefaultFlags>(pRes);
     if (false == da.HasMember("User"))
@@ -44,8 +65,50 @@ bool UtilNet::recvUserLogin(const char* pRes)
     log("recv type correct");
 
     _g_username = std::string(da["User"].GetString());
+
+    auto p = PageSelectScene::getInstance();
+    if (nullptr != p)
+    {
+        p->callbackUserLogin();
+    }
+    return true;
+}
+
+bool UtilNet::sendGetMapInfo(void)
+{
+    return UtilNet::sendData("Matrix.GetMapInfo", "", "getmapinfo");
+}
+
+bool UtilNet::recvGetMapInfo(int errcode, const char* pRes)
+{
+    if (ERR_NET_NOERR != errcode)
+    {
+        return false;
+    }
+
+    rapidjson::Document da;
+    da.Parse<rapidjson::kParseDefaultFlags>(pRes);
+    if (false == da.HasMember("MapW") ||
+        false == da.HasMember("MapH"))
+    {
+        return false;
+    }
+    if (false == da["MapW"].IsInt() ||
+        false == da["MapH"].IsInt())
+    {
+        log("recv type wrong");
+        return false;
+    }
+    log("recv type correct");
+
+    int mapw = da["MapW"].GetInt();
+    int maph = da["MapH"].GetInt();
+    auto p = PageSelectScene::getInstance();
+    if (nullptr != p)
+    {
+        p->callbackGetMapInfo(mapw, maph);
+    }
     
-    PageSelectScene::getInstance()->callbackUserLogin();
     return true;
 }
 
@@ -72,51 +135,63 @@ bool decodeNetPageAttr(rapidjson::Document::ValueIterator it, NetPageAttr* outAt
     return true;
 }
 
-bool UtilNet::sendShowPages(void)
+bool UtilNet::sendShowPages(int w, int h)
 {
-    return UtilNet::sendData("Matrix.ShowPages", "", "showpages");
+    rapidjson::Document d;
+    d.SetObject();
+    rapidjson::Document::AllocatorType& al = d.GetAllocator();
+    d.AddMember("Width", w, al);
+    d.AddMember("Height", h, al);
+    rapidjson::StringBuffer sb;
+    rapidjson::Writer<rapidjson::StringBuffer> wt(sb);
+    d.Accept(wt);
+
+    return UtilNet::sendData("Matrix.ShowPages", sb.GetString(), "showpages");
 }
 
-bool UtilNet::recvShowPages(const char* pRes)
-{    rapidjson::Document da;
-    da.Parse<rapidjson::kParseDefaultFlags>(pRes);
-    if (false == da.HasMember("MapW") ||
-        false == da.HasMember("MapH") ||
-        false == da.HasMember("Pages"))
+bool UtilNet::recvShowPages(int errcode, const char* pRes)
+{
+    if (ERR_NET_NOERR != errcode)
     {
         return false;
     }
-    if (false == da["MapW"].IsInt() ||
-        false == da["MapH"].IsInt() ||
-        false == da["Pages"].IsArray())
+
+    rapidjson::Document da;
+    da.Parse<rapidjson::kParseDefaultFlags>(pRes);
+    if (false == da.HasMember("Pages"))
+    {
+        return false;
+    }
+    if (false == da["Pages"].IsArray())
     {
         log("recv type wrong");
         return false;
     }
     log("recv type correct");
 
-    int mapw = da["MapW"].GetInt();
-    int maph = da["MapH"].GetInt();
     int size = da["Pages"].Size();
-    if (0 == size)
-    {
-        PageSelectScene::getInstance()->callbackShowPages(mapw, maph);
-        return true;
-    }
 
     NetPageAttr pagearr[size];
-    int index = 0;
-    for (auto it = da["Pages"].onBegin(); it != da["Pages"].onEnd(); it++)
+
+    if (0 != size)
     {
-        if (false == decodeNetPageAttr(it, &(pagearr[index])))
+        int index = 0;
+        for (auto it = da["Pages"].onBegin(); it != da["Pages"].onEnd(); it++)
         {
-            continue;
-            size -= 1;
+            if (false == decodeNetPageAttr(it, &(pagearr[index])))
+            {
+                continue;
+                size -= 1;
+            }
+            index++;
         }
-        index++;
     }
 
-    PageSelectScene::getInstance()->callbackShowPages(mapw, maph, pagearr, size);
+    auto p = PageSelectScene::getInstance();
+    if (nullptr != p)
+    {
+        p->callbackShowPages(pagearr, size);
+    }
 
     return true;
 }
@@ -135,8 +210,13 @@ bool UtilNet::sendSelectPage(int w, int h)
     return UtilNet::sendData("Matrix.SelcetPage", sb.GetString(), "selectpage");
 }
 
-bool UtilNet::recvSelectPage(const char* pRes)
+bool UtilNet::recvSelectPage(int errcode, const char* pRes)
 {
+    if (ERR_NET_NOERR != errcode)
+    {
+        return false;
+    }
+
     rapidjson::Document da;
     da.Parse<rapidjson::kParseDefaultFlags>(pRes);
     if (false == da.HasMember("Ret") ||
@@ -158,7 +238,11 @@ bool UtilNet::recvSelectPage(const char* pRes)
     auto maxw = da["MaxW"].GetInt();
     auto maxh = da["MaxH"].GetInt();
 
-    PageSelectScene::getInstance()->callbackSelectPage(bret, maxw, maxh);
+    auto p = PageSelectScene::getInstance();
+    if (nullptr != p)
+    {
+        p->callbackSelectPage(bret, maxw, maxh);
+    }
 
     return true;
 }
@@ -168,8 +252,14 @@ bool UtilNet::sendReleasePage(void)
     return UtilNet::sendData("Matrix.ReleasePage", "", "releaspage");
 }
 
-bool UtilNet::recvReleasePage(const char* pRes)
+bool UtilNet::recvReleasePage(int errcode, const char* pRes)
 {
+    if (ERR_NET_NOERR != errcode)
+    {
+        return false;
+    }
+
+
     return true;
 }
 
@@ -215,8 +305,13 @@ bool UtilNet::sendBoxClick(int pw, int ph, int w, int h)
     return UtilNet::sendData("Matrix.ClickBox", sb.GetString(), "clickbox");
 }
 
-bool UtilNet::recvBoxClick(const char* pRes)
+bool UtilNet::recvBoxClick(int errcode, const char* pRes)
 {
+    if (ERR_NET_NOERR != errcode)
+    {
+        return UtilNet::dispatchErrCode(errcode);
+    }
+
     rapidjson::Document da;
     da.Parse<rapidjson::kParseDefaultFlags>(pRes);
     if (false == da.HasMember("Num") ||
@@ -237,25 +332,27 @@ bool UtilNet::recvBoxClick(const char* pRes)
     int num = da["Num"].GetInt();
     int bomb = da["Bomb"].GetInt();
     int size = da["Refresh"].Size();
-    if (0 == size)
-    {
-        GameSceneNet::getInstance()->callbackClickBox(num, bomb);
-        return true;
-    }
 
     NetBoxAttr boxarr[size];
-    int index = 0;
-    for (auto it = da["Refresh"].onBegin(); it != da["Refresh"].onEnd(); it++)
+    if (0 != size)
     {
-        if (false == decodeNetBoxAttr(it, &(boxarr[index])))
+        int index = 0;
+        for (auto it = da["Refresh"].onBegin(); it != da["Refresh"].onEnd(); it++)
         {
-            continue;
-            size -= 1;
+            if (false == decodeNetBoxAttr(it, &(boxarr[index])))
+            {
+                continue;
+                size -= 1;
+            }
+            index++;
         }
-        index++;
     }
 
-    GameSceneNet::getInstance()->callbackClickBox(num, bomb, boxarr, size);
+    auto p = GameSceneNet::getInstance();
+    if (nullptr != p)
+    {
+        p->callbackClickBox(num, bomb, boxarr, size);
+    }
     
     return true;
 }
@@ -276,8 +373,12 @@ bool UtilNet::sendBoxFlag(int pw, int ph, int w, int h)
     return UtilNet::sendData("Matrix.FlagBox", sb.GetString(), "flagbox");
 }
 
-bool UtilNet::recvBoxFlag(const char* pRes)
+bool UtilNet::recvBoxFlag(int errcode, const char* pRes)
 {
+    if (ERR_NET_NOERR != errcode)
+    {
+        return UtilNet::dispatchErrCode(errcode);
+    }
 
     rapidjson::Document da;
     da.Parse<rapidjson::kParseDefaultFlags>(pRes);
@@ -299,25 +400,27 @@ bool UtilNet::recvBoxFlag(const char* pRes)
     int num = da["Num"].GetInt();
     int bomb = da["Bomb"].GetInt();
     int size = da["Refresh"].Size();
-    if (0 == size)
-    {
-        GameSceneNet::getInstance()->callbackFlagBox(num, bomb);
-        return true;
-    }
 
     NetBoxAttr boxarr[size];
-    int index = 0;
-    for (auto it = da["Refresh"].onBegin(); it != da["Refresh"].onEnd(); it++)
+    if (0 != size)
     {
-        if (false == decodeNetBoxAttr(it, &(boxarr[index])))
+        int index = 0;
+        for (auto it = da["Refresh"].onBegin(); it != da["Refresh"].onEnd(); it++)
         {
-            continue;
-            size -= 1;
+            if (false == decodeNetBoxAttr(it, &(boxarr[index])))
+            {
+                continue;
+                size -= 1;
+            }
+            index++;
         }
-        index++;
     }
 
-    GameSceneNet::getInstance()->callbackFlagBox(num, bomb, boxarr, size);
+    auto p = GameSceneNet::getInstance();
+    if (nullptr != p)
+    {
+        p->callbackFlagBox(num, bomb, boxarr, size);
+    }
 
     return true;
 }
@@ -338,8 +441,13 @@ bool UtilNet::sendLoadSubPage(int pw, int ph, int w, int h)
     return UtilNet::sendData("Matrix.LoadSubPage", sb.GetString(), "loadsubpage");
 }
 
-bool UtilNet::recvLoadSubPage(const char* pRes)
+bool UtilNet::recvLoadSubPage(int errcode, const char* pRes)
 {
+    if (ERR_NET_NOERR != errcode)
+    {
+        return UtilNet::dispatchErrCode(errcode);
+    }
+
     rapidjson::Document da;
     da.Parse<rapidjson::kParseDefaultFlags>(pRes);
     
@@ -372,8 +480,12 @@ bool UtilNet::recvLoadSubPage(const char* pRes)
         }
         index++;
     }
-    
-    GameSceneNet::getInstance()->updateBoxs(pw, ph, boxarr, size);
+
+    auto p = GameSceneNet::getInstance();
+    if (nullptr != p)
+    {
+        p->updateBoxs(pw, ph, boxarr, size);
+    }
     
     return true;
 }
@@ -391,6 +503,7 @@ Map<std::string, UtilNetRecv*> pMapRecv;
 bool UtilNet::regRecvList(void)
 {
     pMapRecv.insert("userlogin", UtilNetRecv::create(UtilNet::recvUserLogin));
+    pMapRecv.insert("getmapinfo", UtilNetRecv::create(UtilNet::recvGetMapInfo));
     pMapRecv.insert("showpages", UtilNetRecv::create(UtilNet::recvShowPages));
     pMapRecv.insert("selectpage", UtilNetRecv::create(UtilNet::recvSelectPage));
     pMapRecv.insert("releaspage", UtilNetRecv::create(UtilNet::recvReleasePage));
@@ -455,19 +568,20 @@ void UtilNet::recvMsg(HttpClient* c, HttpResponse* r)
     if (false == r->isSucceed())
     {
         log("error buffer: %s", r->getErrorBuffer());
-        return;
+        UtilNet::connectErr(r);
     }
-    
-    log("response tag %s", r->getHttpRequest()->getTag());
-    
-    UtilNet::recvData(r);
+    else{
+        log("response tag %s", r->getHttpRequest()->getTag());
+        
+        UtilNet::recvData(r);
+    }
     
     r->getHttpRequest()->release();
     
     return;
 }
 
-void UtilNet::recvData(cocos2d::network::HttpResponse* r)
+void UtilNet::recvData(HttpResponse* r)
 {
     auto rData = r->getResponseData();
     int len = (int)rData->size();
@@ -481,18 +595,26 @@ void UtilNet::recvData(cocos2d::network::HttpResponse* r)
     
     UtilNet::cryptoData(len, (unsigned char*)rData->data(), (unsigned char*)acBuf);
     
-    log("recv %s", acBuf);
-    
+//    log("recv(%d) %s", len, acBuf);
+
     rapidjson::Document d;
     d.Parse<rapidjson::kParseDefaultFlags>(acBuf);
     for (auto it = d.MemberonBegin(); it != d.MemberonEnd(); it++)
     {
-        log("key %s, value %s", it->name.GetString(), it->value.GetString());
+        if (true == it->value.IsString())
+        {
+            log("key %s, value %s", it->name.GetString(), it->value.GetString());
+        }
+        else if (true == it->value.IsInt())
+        {
+            log("key %s, value %d", it->name.GetString(), it->value.GetInt());
+        }
     }
     
     if (false == d.HasMember("Err") ||
         false == d.HasMember("Time") ||
-        false == d.HasMember("Data"))
+        false == d.HasMember("Data") ||
+        false == d.HasMember("ErrCode"))
     {
         log("recv invalid msg : %s", d.GetString());
         return;
@@ -501,15 +623,26 @@ void UtilNet::recvData(cocos2d::network::HttpResponse* r)
     auto err = __String::create(d["Err"].GetString());
     if (0 != err->compare("ok"))
     {
-        log("return error : %s", err->getCString());
-        return;
+        log("return error(code %d) : %s", d["ErrCode"].GetInt(), err->getCString());
     }
     
     auto c = pMapRecv.at(r->getHttpRequest()->getTag());
     if (nullptr != c)
     {
-        c->_h(d["Data"].GetString());
+        c->_h(d["ErrCode"].GetInt(), d["Data"].GetString());
     }
     
     return;
+}
+
+void UtilNet::connectErr(HttpResponse* r)
+{
+    if (nullptr != GameSceneNet::getInstance())
+    {
+        GameSceneNet::getInstance()->callbackErrConnection();
+    }
+    else if (nullptr != PageSelectScene::getInstance())
+    {
+        PageSelectScene::getInstance()->callbackErrConnection();
+    }
 }

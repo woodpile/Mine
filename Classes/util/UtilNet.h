@@ -15,24 +15,28 @@
 class UtilNet
 {
 public:
-    typedef std::function<bool(const char*)> recvCallback;
+    typedef std::function<bool(int errcode, const char*)> recvCallback;
     static bool regRecvList(void);
 
     static bool sendUserLogin(void);
-    static bool sendShowPages(void);
+    static bool sendGetMapInfo(void);
+    static bool sendShowPages(int w, int h);
     static bool sendSelectPage(int w, int h);
     static bool sendReleasePage(void);
     static bool sendLoadSubPage(int pw, int ph, int w, int h);
     static bool sendBoxClick(int pw, int ph, int w, int h);
     static bool sendBoxFlag(int pw, int ph, int w, int h);
 private:
-    static bool recvUserLogin(const char* pRes);
-    static bool recvShowPages(const char* pRes);
-    static bool recvSelectPage(const char* pRes);
-    static bool recvReleasePage(const char* pRes);
-    static bool recvLoadSubPage(const char* pRes);
-    static bool recvBoxClick(const char* pRes);
-    static bool recvBoxFlag(const char* pRes);
+    static bool dispatchErrCode(int errcode);
+
+    static bool recvUserLogin(int errcode, const char* pRes);
+    static bool recvGetMapInfo(int errcode, const char* pRes);
+    static bool recvShowPages(int errcode, const char* pRes);
+    static bool recvSelectPage(int errcode, const char* pRes);
+    static bool recvReleasePage(int errcode, const char* pRes);
+    static bool recvLoadSubPage(int errcode, const char* pRes);
+    static bool recvBoxClick(int errcode, const char* pRes);
+    static bool recvBoxFlag(int errcode, const char* pRes);
     
     static bool cryptoData(int len, const unsigned char* pIn, unsigned char* pOut);
     static bool sendData(const char* pMethod, const char* pData, const char* pTag);
@@ -40,6 +44,8 @@ private:
     
     static void recvMsg(cocos2d::network::HttpClient* c, cocos2d::network::HttpResponse* r);
     static void recvData(cocos2d::network::HttpResponse* r);
+
+    static void connectErr(cocos2d::network::HttpResponse* r);
 };
 
 class UtilNetRecv : public cocos2d::Ref

@@ -5,7 +5,8 @@
 USING_NS_CC;
 
 MPage::MPage(void)
-: _page_w(0), _page_h(0), _hasown(false), _open_precent(0.0), _label_precent(nullptr)
+: _page_w(0), _page_h(0), _hasown(false), _open_precent(0.0), _label_precent(nullptr),
+_bCanTouch(true), _base_pos(Point(0,0))
 {
     return;
 }
@@ -40,9 +41,10 @@ void MPage::onEnter(void)
     Sprite::onEnter();
 
     //创建百分比显示标签
-    _label_precent = Label::createWithTTF("0%", CF_F("font_hei"), 60);
+    _label_precent = Label::createWithTTF("0%", CF_F("font_hei"), 54);
     _label_precent->setColor(Color3B::WHITE);
-    _label_precent->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
+    _label_precent->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 3);
+    _label_precent->setScaleY(0.8);
     this->addChild(_label_precent);
     
     //触摸监听
@@ -70,6 +72,11 @@ void MPage::onExit(void)
 //引擎 触摸行为按下
 bool MPage::onTouchBegan(Touch* touch, Event* event)
 {
+    if (false == _bCanTouch || true == PageSelectScene::getInstance()->isWaitNet())
+    {
+        return false;
+    }
+
     //检查触摸点是否处于本格子的范围内
     Point point = this->convertTouchToNodeSpaceAR(touch);
     auto s = this->getContentSize();
@@ -140,6 +147,18 @@ void MPage::setPageOwn(bool hasown)
     }
 }
 
+//设置页面格子的基准pos
+void MPage::setBasePosition(cocos2d::Point basepos)
+{
+    _base_pos = basepos;
+}
+
+//获取页面格子的基准pos
+Point MPage::getBasePosition(void)
+{
+    return _base_pos;
+}
+
 //设置页面的进度百分比
 void MPage::setOpenPercent(double p)
 {
@@ -152,4 +171,17 @@ void MPage::setOpenPercent(double p)
 
     auto pn = String::createWithFormat("%d%%", (int)p);
     _label_precent->setString(pn->getCString());
+}
+
+//从选择场景中隐藏
+void MPage::hideFromScene(void)
+{
+    _bCanTouch = false;
+    this->setVisible(false);
+}
+//从选择场景中出现
+void MPage::showFromScene(void)
+{
+    _bCanTouch = true;
+    this->setVisible(true);
 }

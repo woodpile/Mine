@@ -18,7 +18,7 @@ public:
     //退出菜单键的回调函数
     virtual void menuCloseCallback(cocos2d::Ref* pSender);
     //重新开始菜单键的回调函数
-    void menuRestartCallback(cocos2d::Ref* pSender);
+    virtual void menuRestartCallback(cocos2d::Ref* pSender);
     
     //格子被点击
     virtual bool boxBeClick(int w, int h);
@@ -27,6 +27,9 @@ public:
     //重新扩散一些盒子
     virtual void reDiffusion(void);
 
+    //是否处于等待通信状态
+    virtual bool isWaitNet(void);
+    
     //引擎
     CREATE_FUNC(GameScene);
     

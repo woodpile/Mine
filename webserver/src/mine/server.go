@@ -31,7 +31,7 @@ func hMineMain(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var ret string
-	if ".UserLogin" == request.Method {
+	if ".UserLogin" == request.req.Method {
 		//创建请求
 		ret, err = request.createUserChannel()
 		if nil != err {
